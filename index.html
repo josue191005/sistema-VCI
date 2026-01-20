@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Agencia VCI | Modernización de Negocios Locales</title>
+    <meta name="description" content="Sistema VCI: Visibilidad, Control e Innovación para negocios locales. Marketing, Web y Automatización con IA en Lima.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- 1. CONFIGURACIÓN E IDENTIDAD VISUAL CYBERPUNK --- */
+        :root {
+            /* Paleta Cyberpunk Neón */
+            --bg-dark: #020205;          
+            --bg-surface: #0d0d14;       
+            
+            --neon-pink: #ff0055;        
+            --neon-cyan: #00f7ff;        
+            --neon-green: #39ff14;       
+            
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+
+            /* Tipografías */
+            --font-title: 'Oswald', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+
+            /* Layout */
+            --container-width: 1200px;
+            --header-height: 80px;
+            --border-radius: 4px;
+            
+            /* Efectos */
+            --glow-pink: 0 0 15px rgba(255, 0, 85, 0.6);
+            --glow-cyan: 0 0 15px rgba(0, 247, 255, 0.5);
+            --glow-green: 0 0 15px rgba(57, 255, 20, 0.5);
+            --text-glow: 0 0 10px rgba(255,255,255,0.4);
+
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: var(--header-height); }
+        
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 0%, #1a1a2e 0%, var(--bg-dark) 70%);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- UTILIDADES --- */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-title);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: white;
+            text-shadow: var(--text-glow);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--neon-cyan);
+            margin-bottom: 4rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            font-family: var(--font-title);
+            font-weight: 700;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 2px;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%; right: -50%; bottom: -50%; left: -50%;
+            background: linear-gradient(to bottom, rgba(229, 172, 142, 0), rgba(255,255,255,0.3) 50%, rgba(229, 172, 142, 0));
+            transform: rotateZ(60deg) translate(-5em, 7.5em);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        .btn:hover::after { opacity: 1; transform: rotateZ(60deg) translate(1em, -9em); }
+
+        .btn-primary {
+            background-color: var(--neon-pink);
+            color: white;
+            box-shadow: var(--glow-pink);
+        }
+        .btn-primary:hover { background-color: #d40047; transform: translateY(-3px); box-shadow: 0 0 25px rgba(255, 0, 85, 0.8); }
+
+        .btn-accent {
+            background-color: transparent;
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+            box-shadow: var(--glow-green);
+        }
+        .btn-accent:hover { background-color: var(--neon-green); color: var(--bg-dark); transform: translateY(-3px); }
+
+        .highlight-pink { color: var(--neon-pink); text-shadow: 0 0 10px var(--neon-pink); }
+        .highlight-cyan { color: var(--neon-cyan); text-shadow: 0 0 10px var(--neon-cyan); }
+
+        /* --- HEADER --- */
+        header {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            height: var(--header-height);
+            background: rgba(2, 2, 5, 0.9);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-family: var(--font-title);
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+        .logo span { color: var(--neon-pink); }
+
+        .nav-menu { display: flex; list-style: none; gap: 30px; }
+
+        .nav-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+        }
+
+        .nav-link::before {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--neon-cyan); transition: var(--transition);
+        }
+        .nav-link:hover::before { width: 100%; }
+        .nav-link:hover { color: var(--neon-cyan); }
+
+        .hamburger { display: none; cursor: pointer; color: var(--neon-cyan); font-size: 1.8rem; }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(rgba(2, 2, 5, 0.85), rgba(2, 2, 5, 0.95)), 
+                        url('https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=1974&auto=format&fit=crop') center/cover no-repeat;
+            padding: calc(var(--header-height) + 40px) 20px 60px;
+        }
+
+        .hero-content { max-width: 900px; animation: fadeInUp 0.8s ease-out; }
+
+        .hero h1 {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            line-height: 1.05;
+            text-transform: uppercase;
+            font-weight: 800;
+        }
+        
+        .hero-subtitle {
+             color: var(--neon-green);
+             font-family: var(--font-title);
+             letter-spacing: 2px;
+             margin-bottom: 15px;
+             display: block;
+             font-weight: 600;
+        }
+
+        .hero p { font-size: 1.2rem; margin-bottom: 40px; color: var(--text-muted); max-width: 700px; margin-inline: auto;}
+
+        /* --- SECCIONES --- */
+        .section-pad { padding: 100px 0; }
+        .vci-section { background-color: var(--bg-dark); position: relative; }
+        
+        .cyber-lines::before, .cyber-lines::after {
+            content: ''; position: absolute; height: 2px; width: 100%;
+            background: linear-gradient(90deg, transparent, var(--neon-cyan), transparent);
+            opacity: 0.3;
+        }
+        .cyber-lines::before { top: 0; } .cyber-lines::after { bottom: 0; }
+
+        .vci-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .vci-card {
+            background: var(--bg-surface);
+            padding: 40px 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        
+        .vci-card:nth-child(1) { border-bottom: 3px solid var(--neon-cyan); }
+        .vci-card:nth-child(2) { border-bottom: 3px solid var(--neon-pink); }
+        .vci-card:nth-child(3) { border-bottom: 3px solid var(--neon-green); }
+
+        .vci-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); }
+        .vci-card h3 { font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        .vci-card i { font-size: 1.5rem; }
+        .vci-card:nth-child(1) i { color: var(--neon-cyan); }
+        .vci-card:nth-child(2) i { color: var(--neon-pink); }
+        .vci-card:nth-child(3) i { color: var(--neon-green); }
+        .vci-card p { color: var(--text-muted); }
+
+        /* --- SERVICIOS --- */
+        .services { background-color: #05050a; }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: var(--bg-surface);
+            border: 1px solid rgba(0, 247, 255, 0.1);
+            padding: 35px;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+        .service-card:hover {
+            background: #151520;
+            border-color: var(--neon-cyan);
+            box-shadow: var(--glow-cyan);
+        }
+        .service-icon { font-size: 2.5rem; color: var(--neon-cyan); margin-bottom: 25px; transition: var(--transition); }
+        .service-card:hover .service-icon { color: var(--neon-pink); transform: scale(1.1); }
+        .service-card h3 { font-size: 1.3rem; margin-bottom: 15px; }
+        .service-card p { color: var(--text-muted); margin-bottom: 20px; font-size: 0.95rem; }
+        .read-more { font-size: 0.9rem; color: var(--neon-green); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* --- PLANES --- */
+        .pricing { background-color: var(--bg-dark); }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .plan-card {
+            background: var(--bg-surface);
+            padding: 50px 35px;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            transition: var(--transition);
+            display: flex; flex-direction: column; height: 100%;
+        }
+
+        .plan-card.standard {
+            background: linear-gradient(160deg, var(--bg-surface) 60%, rgba(255, 0, 85, 0.15) 100%);
+            border: 2px solid var(--neon-pink);
+            box-shadow: var(--glow-pink);
+            transform: scale(1.05);
+            z-index: 2;
+        }
+        .plan-card.standard:hover { box-shadow: 0 0 40px rgba(255, 0, 85, 0.5); }
+
+        .plan-badge {
+            position: absolute; top: -12px; right: 50%; transform: translateX(50%);
+            background: var(--neon-pink); color: white;
+            padding: 6px 20px; font-weight: 700; font-family: var(--font-title);
+            text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px;
+            box-shadow: var(--glow-pink);
+            white-space: nowrap;
+        }
+
+        .plan-header h3 { font-size: 2rem; margin-bottom: 5px; }
+        .plan-price { font-size: 3rem; font-family: var(--font-title); color: white; margin: 25px 0; font-weight: 700; }
+        .plan-price span { font-size: 1rem; color: var(--text-muted); font-weight: 400; }
+        
+        .plan-features { list-style: none; margin-bottom: 40px; flex-grow: 1; }
+        .plan-features li { margin-bottom: 18px; display: flex; align-items: flex-start; font-size: 1rem; color: #ccc; gap: 12px; }
+        .plan-features li i.check { color: var(--neon-green); }
+        .plan-features li i.cross { color: #555; }
+
+        /* --- NOSOTROS --- */
+        .about { background: #05050a; border-top: 1px solid #1a1a2e; }
+        .about-content { display: flex; flex-wrap: wrap; gap: 60px; align-items: center; }
+        .about-text { flex: 1 1 450px; }
+        .about-image { flex: 1 1 350px; text-align: center; position: relative; }
+        
+        .profile-img {
+            width: 300px; height: 300px;
+            object-fit: cover;
+            border: 3px solid var(--neon-cyan);
+            padding: 5px;
+            background: var(--bg-dark);
+            box-shadow: var(--glow-cyan), inset 0 0 20px rgba(0, 247, 255, 0.2);
+            position: relative; z-index: 2;
+        }
+        .about-image::after {
+            content: ''; position: absolute; width: 300px; height: 300px;
+            border: 2px solid var(--neon-pink); top: 20px; left: 50%;
+            transform: translateX(-45%); z-index: 1; opacity: 0.5;
+        }
+
+        /* --- FOOTER --- */
+        footer { background: #000; padding: 60px 0 30px; text-align: center; border-top: 2px solid var(--neon-pink); }
+        .social-links { margin-bottom: 30px; display: flex; justify-content: center; gap: 20px; }
+        .social-link {
+            display: flex; justify-content: center; align-items: center;
+            width: 55px; height: 55px;
+            background: var(--bg-surface); color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 1.4rem; transition: var(--transition); text-decoration: none;
+        }
+        .social-link:hover {
+            background: var(--neon-cyan); color: var(--bg-dark);
+            border-color: var(--neon-cyan); box-shadow: var(--glow-cyan);
+            transform: translateY(-5px);
+        }
+        .footer-text { color: #666; font-size: 0.9rem; }
+
+        /* --- MODAL --- */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(2, 2, 5, 0.95); backdrop-filter: blur(10px);
+            z-index: 2000; justify-content: center; align-items: center; padding: 20px;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal.active { display: flex; opacity: 1; }
+        
+        .modal-content {
+            background: var(--bg-surface); padding: 40px;
+            max-width: 600px; width: 100%; position: relative;
+            border: 2px solid var(--neon-pink); box-shadow: var(--glow-pink);
+            transform: translateY(20px); transition: transform 0.3s ease;
+        }
+        .modal.active .modal-content { transform: translateY(0); }
+
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 2rem; color: var(--text-muted); cursor: pointer; transition: var(--transition); }
+        .close-modal:hover { color: var(--neon-pink); transform: rotate(90deg); }
+
+        .modal-body h3 { color: var(--neon-cyan); font-size: 2rem; margin-bottom: 20px; }
+        .modal-body hr { border: none; border-top: 1px solid rgba(255,255,255,0.1); margin: 25px 0; }
+        .modal-detail-title { color: var(--neon-green); font-family: var(--font-title); margin-bottom: 15px; font-size: 1.2rem; }
+
+        /* --- WSP FLOAT --- */
+        .wsp-float {
+            position: fixed; bottom: 30px; right: 30px;
+            background: #25D366; color: white;
+            width: 65px; height: 65px; border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 32px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 1500; transition: var(--transition); text-decoration: none;
+        }
+        .wsp-float:hover { transform: scale(1.1) rotate(15deg); background: #1ebc57; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 4rem; }
+            .plan-card.standard { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            :root { --header-height: 70px; }
+            .hero h1 { font-size: 3rem; }
+            .hamburger { display: block; }
+            
+            .nav-menu {
+                position: fixed; top: var(--header-height); left: 100%;
+                flex-direction: column; background-color: var(--bg-dark);
+                width: 100%; height: calc(100vh - var(--header-height));
+                padding: 60px 30px; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                align-items: center; justify-content: flex-start; gap: 40px;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+            .nav-menu.active { left: 0; }
+            .nav-link { font-size: 1.5rem; }
+
+            .about-content { flex-direction: column-reverse; text-align: center; gap: 40px; }
+            .profile-img { width: 250px; height: 250px; }
+            .about-image::after { width: 250px; height: 250px; }
+            
+            .section-pad { padding: 70px 0; }
+            .pricing-grid, .services-grid, .vci-grid { gap: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2.6rem; }
+            .section-title { font-size: 2.2rem; }
+            .container { padding: 0 16px; }
+            .vci-grid, .services-grid, .pricing-grid { grid-template-columns: 1fr; }
+            .plan-card, .service-card { padding: 30px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">AGENCIA <span>VCI</span></a>
+            <nav>
+                <ul class="nav-menu" id="nav-menu">
+                    <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="#servicios" class="nav-link">Servicios</a></li>
+                    <li><a href="#vci" class="nav-link">Sistema VCI</a></li>
+                    <li><a href="#planes" class="nav-link">Planes</a></li>
+                    <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+                </ul>
+            </nav>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <span class="hero-subtitle">¿TU NEGOCIO NO ESTA EN INTERNET?</span>
+            <h1>MODERNIZA TU NEGOCIO <span class="highlight-pink">SIN COMPLICACIONES</span></h1>
+            <p>Deja de competir solo por precio. Implementamos el Sistema VCI (Visibilidad, Control e Innovación) con tecnología accesible para que domines tu mercado local.</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <a href="#planes" class="btn btn-primary">Ver Planes de Modernización</a>
+                <a href="#servicios" class="btn btn-accent">Explorar Servicios</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="vci" class="vci-section section-pad cyber-lines">
+        <div class="container">
+            <h2 class="section-title">El Sistema <span class="highlight-cyan">VCI</span></h2>
+            <p class="section-subtitle">Los tres pilares de tu transformación digital</p>
+            <div class="vci-grid">
+                <div class="vci-card">
+                    <h3><i class="fas fa-eye"></i> Visibilidad</h3>
+                    <p>Domina Google Maps, redes sociales profesionales y ten una web que vende 24/7. Que tus clientes te encuentren antes que a la competencia.</p>
+                </div>
+                <div class="vci-card">
+                    <h3><i class="fas fa-chart-pie"></i> Control</h3>
+                    <p>Organiza tu inventario, finanzas y clientes. Deja de perder dinero por desorden y toma decisiones basadas en datos reales.</p>
+                </div>
+                <div class="vci-card">
+                    <h3><i class="fas fa-robot"></i> Innovación</h3>
+                    <p>Utiliza Inteligencia Artificial para marketing y automatización. Haz más trabajo en menos tiempo y destaca por modernidad.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicios" class="services section-pad">
+        <div class="container">
+            <h2 class="section-title">Desglose Técnico</h2>
+            <p class="section-subtitle">Nuestros módulos de implementación</p>
+            <div class="services-grid" id="services-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="planes" class="pricing section-pad">
+        <div class="container">
+            <h2 class="section-title">Inversión Inteligente</h2>
+            <p class="section-subtitle">Elige el nivel de modernización que necesitas</p>
+            <div class="pricing-grid" id="pricing-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="nosotros" class="about section-pad">
+        <div class="container about-content">
+            <div class="about-text">
+                <h2 class="section-title" style="text-align: left;">Sobre el Fundador</h2>
+                <h3 style="color: var(--neon-pink); margin-bottom: 20px; font-size: 1.5rem;">Josué Becerra <span style="font-size: 0.8em; color: var(--text-muted); font-weight: 400;">| Ing. de Sistemas UPC</span></h3>
+                <p style="margin-bottom: 20px; color: var(--text-muted);">
+                    Mi misión es revolucionar el barrio. Transformo dueños de negocios tradicionales en emprendedores modernos utilizando herramientas tecnológicas de alto impacto que antes solo estaban al alcance de grandes empresas.
+                </p>
+                <p style="margin-bottom: 30px; color: var(--text-main); font-weight: 500; border-left: 3px solid var(--neon-cyan); padding-left: 15px;">
+                    "En la era digital, la adaptación no es opcional, es clave para la supervivencia. Destacar es mi principio, y haré que tu negocio también lo haga."
+                </p>
+                <a href="https://wa.me/51989435125?text=Hola%20Josué,%20quiero%20conocer%20más%20sobre%20Agencia%20VCI" target="_blank" class="btn btn-primary">Contactar Directamente</a>
+            </div>
+            <div class="about-image">
+                <img 
+                    id="profile-photo"
+                    src="" 
+                    alt="Josué Becerra" 
+                    class="profile-img" 
+                > 
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="social-links">
+                <a href="https://wa.me/51989435125" target="_blank" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@josue.techydata" target="_blank" class="social-link" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            </div>
+            <p class="footer-text">&copy; 2024 Agencia VCI. Lima, Perú. Transformación Digital Local.</p>
+        </div>
+    </footer>
+
+    <div class="modal" id="service-modal">
+        <div class="modal-content">
+            <span class="close-modal" id="close-modal">&times;</span>
+            <div class="modal-body" id="modal-body">
+                </div>
+        </div>
+    </div>
+
+    <a href="https://wa.me/51989435125?text=Hola,%20vi%20su%20web%20y%20me%20interesa%20modernizar%20mi%20negocio." class="wsp-float" target="_blank" aria-label="Chatear por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // --- 0. FUNCIÓN MÁGICA DE IMAGENES (PROXY WSRV.NL) ---
+        function fixUrl(u) {
+            if(!u) return 'https://via.placeholder.com/300';
+            if(u.includes('drive')) {
+                // Extrae el ID y usa el proxy wsrv.nl
+                return `https://wsrv.nl/?url=${encodeURIComponent('https://drive.google.com/uc?export=view&id='+u.split('/d/')[1].split('/')[0])}`;
+            }
+            return `https://wsrv.nl/?url=${encodeURIComponent(u)}`;
+        }
+
+        // --- 1. DATOS (JSON) ---
+        const servicesData = [
+            {
+                id: 1, icon: "fa-hashtag", title: "Estrategia Redes Sociales",
+                desc: "Plan quincenal, guiones virales (TikTok/Reels) y configuración profesional de WhatsApp Business.",
+                details: "Incluye carga de catálogo en WhatsApp, configuración de respuestas rápidas, calendario de ideas y estructura de posts de venta."
+            },
+            {
+                id: 2, icon: "fa-laptop-code", title: "Infraestructura Web VCI",
+                desc: "Tu centro de operaciones digital. Catálogo online, módulo de reservas y conexión a WhatsApp.",
+                details: "Diseño UI/UX responsive, SEO técnico para Google, botón flotante y formularios conectados a base de datos."
+            },
+            {
+                id: 3, icon: "fa-map-location-dot", title: "Posicionamiento G. Maps",
+                desc: "Aparece destacado cuando tus vecinos busquen tus servicios en el mapa.",
+                details: "Verificación exacta del pin, optimización de perfil con fotos de alta calidad y estrategia para conseguir reseñas de 5 estrellas."
+            },
+            {
+                id: 4, icon: "fa-qrcode", title: "Marketing Híbrido",
+                desc: "Conecta tu mostrador físico con el mundo digital mediante QRs y listas de difusión.",
+                details: "Diseño de QRs para impresión, campañas de fidelización en tienda y segmentación de clientes en WhatsApp para ofertas sin spam."
+            },
+            {
+                id: 5, icon: "fa-table-list", title: "Gestión y Control",
+                desc: "Ordena inventarios, citas, consultas y base de datos de clientes.",
+                details: "Plantillas de Google Sheets automatizadas para alertas de bajo stock, registro centralizado de reservas y log de consultas."
+            },
+            {
+                id: 6, icon: "fa-brain", title: "Soluciones con IA",
+                desc: "Creatividad y automatización. Imágenes únicas y textos persuasivos.",
+                details: "Generación de activos visuales con Midjourney/Dall-E para anuncios, copywriting asistido y automatización básica de correos."
+            },
+             {
+                id: 7, icon: "fa-arrows-rotate", title: "Mantenimiento y Mejora",
+                desc: "Servicio post-venta para actualizar catálogo y adaptarse a tendencias virales.",
+                details: "Actualización mensual de productos/precios en la web, análisis de métricas de venta y adaptación rápida a nuevas tendencias."
+            }
+        ];
+
+        const plansData = [
+            {
+                title: "Básico", subtitle: "Presencia Digital", price: "350", priceNote: "/ pago único",
+                features: [
+                    { txt: "Landing Page Funcional", check: true },
+                    { txt: "Geolocalización en Google Maps", check: true },
+                    { txt: "Config. WhatsApp Business ", check: true },
+                    { txt: "Adaptaciones y mejora mensual (+ S/. 100)", check: true },
+                ],
+                cta: "Empezar con el Básico", wspMsg: "Hola Josué, me interesa el Plan Básico de S/350 para empezar.", highlight: false
+            },
+            {
+                title: "Estándar", subtitle: "Control & Ventas VCI", price: "500", priceNote: "/ pago único", badge: "Recomendado VCI",
+                features: [
+                    { txt: "Web con Catálogo y/o Reservas", check: true },
+                    { txt: "Geolocalización en Google Maps", check: true },
+                    { txt: "Config. WhatsApp Business ", check: true },
+                    { txt: "Sistema de Inventario y/o Registros (Excel o Sheets)", check: true },
+                    { txt: "QR Físico para mostrador", check: true },
+                    { txt: "Calendario de contenido quincenal (+ S/. 50)", check: true },
+                    { txt: "Adaptaciones y mejora quincenal (+ S/. 180)", check: true },
+                ],
+                cta: "Quiero el Plan Estándar", wspMsg: "Hola Josué, el Plan Estándar de S/500 es justo lo que necesito.", highlight: true
+            },
+            {
+                title: "Avanzado", subtitle: "Modernizacion Total", price: "900", priceNote: "/ pago único",
+                features: [
+                    { txt: "Todo lo del Plan Estándar", check: true },
+                    { txt: "Dashboard de Ventas Mensual", check: true },
+                    { txt: "Calendario de Contenidos (1 mes)", check: true },
+                    { txt: "Asesoria de e-marketing mensual (+ S/. 70)", check: true },
+                    { txt: "Calendario de contenido quincenal (+ S/. 50)", check: true },
+                    { txt: "Adaptaciones y mejora quincenal (+ S/. 180)", check: true },
+                ],
+                cta: "Consultar Avanzado", wspMsg: "Hola Josué, me interesa el Plan Avanzado para modernizarme totalmente.", highlight: false
+            }
+        ];
+
+        // --- 2. RENDERIZADO (DOM) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderServices();
+            renderPlans();
+            setupInteractivity();
+            
+            // --- CARGAR FOTO USANDO LA FUNCIÓN FIXURL ---
+            const driveLink = "https://drive.google.com/file/d/1HPmnQQkK61-v9dmg_7jfEUUo2vVsqwug/view?usp=sharing";
+            const imgElement = document.getElementById('profile-photo');
+            if(imgElement) {
+                // Aquí ocurre la magia:
+                imgElement.src = fixUrl(driveLink);
+            }
+        });
+
+        function renderServices() {
+            const container = document.getElementById('services-grid');
+            container.innerHTML = servicesData.map(service => `
+                <div class="service-card" onclick="openModal(${service.id})" role="button" tabindex="0">
+                    <i class="fas ${service.icon} service-icon"></i>
+                    <h3>${service.title}</h3>
+                    <p>${service.desc}</p>
+                    <span class="read-more">Ver alcance técnico <i class="fas fa-arrow-right" style="margin-left:5px; font-size:0.8em;"></i></span>
+                </div>
+            `).join('');
+        }
+
+        function renderPlans() {
+            const container = document.getElementById('pricing-grid');
+            container.innerHTML = plansData.map(plan => `
+                <div class="plan-card ${plan.highlight ? 'standard' : ''}">
+                    ${plan.highlight ? `<span class="plan-badge">${plan.badge}</span>` : ''}
+                    <div class="plan-header">
+                        <h3 class="${plan.highlight ? 'highlight-pink' : ''}">${plan.title}</h3>
+                        <p style="color:var(--neon-cyan); margin-bottom:15px; font-weight:500; letter-spacing:1px;">${plan.subtitle}</p>
+                        <div class="plan-price">S/ ${plan.price} <span>${plan.priceNote}</span></div>
+                    </div>
+                    <ul class="plan-features">
+                        ${plan.features.map(f => `
+                            <li>
+                                <i class="fas ${f.check ? 'fa-check-circle check' : 'fa-times-circle cross'}"></i>
+                                <span style="${!f.check ? 'opacity:0.6;' : ''}">${f.txt}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <a href="https://wa.me/51989435125?text=${encodeURIComponent(plan.wspMsg)}" target="_blank" class="btn ${plan.highlight ? 'btn-primary' : 'btn-accent'}" style="text-align:center; width:100%;">
+                        ${plan.cta}
+                    </a>
+                </div>
+            `).join('');
+        }
+
+        // --- 3. INTERACTIVIDAD ---
+        const modal = document.getElementById('service-modal');
+        const modalBody = document.getElementById('modal-body');
+        const closeModalBtn = document.getElementById('close-modal');
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        function openModal(id) {
+            const service = servicesData.find(s => s.id === id);
+            if (service) {
+                modalBody.innerHTML = `
+                    <h3><i class="fas ${service.icon}" style="color:var(--neon-pink); margin-right:10px;"></i> ${service.title}</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 20px; line-height:1.5;">${service.desc}</p>
+                    <hr>
+                    <h4 class="modal-detail-title">Alcance Técnico Incluido:</h4>
+                    <p style="color: var(--text-muted);">${service.details}</p>
+                    <a href="https://wa.me/51989435125?text=Hola,%20quisiera%20más%20detalles%20específicos%20sobre%20el%20módulo:%20${encodeURIComponent(service.title)}" target="_blank" class="btn btn-primary" style="margin-top: 30px; width: 100%; text-align: center;">
+                        <i class="fab fa-whatsapp"></i> Consultar este Módulo
+                    </a>
+                `;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; 
+            }
+        }
+
+        function closeModalFunc() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function setupInteractivity() {
+            closeModalBtn.addEventListener('click', closeModalFunc);
+            window.addEventListener('click', (e) => { if (e.target === modal) closeModalFunc(); });
+            window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('active')) closeModalFunc(); });
+
+            hamburger.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                const icon = hamburger.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+                icon.style.color = navMenu.classList.contains('active') ? 'var(--neon-pink)' : 'var(--neon-cyan)';
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navMenu.classList.contains('active')) {
+                       hamburger.click();
+                    }
+                });
+            });
+        }
+    </script>
+</body>
+</html>
