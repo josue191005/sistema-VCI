@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Agencia VCI | Modernización Digital</title>
-    <meta name="description" content="Sistema VCI: Visibilidad, Control e Innovación. Marketing y Web en Lima.">
+    <title>Agencia VCI | Ingeniería & Marketing</title>
+    <meta name="description" content="Soluciones tecnológicas: Apps, Webs, Bases de Datos y Automatización en Lima.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -267,14 +267,13 @@
             box-shadow: inset 0 0 20px rgba(255, 234, 0, 0.1);
         }
 
-        /* ICONOS EN ROJO (CAMBIO SOLICITADO) */
+        /* ICONOS EN ROJO */
         .service-icon { 
             font-size: 3rem; 
-            color: var(--neon-red); /* Iconos Rojos */
+            color: var(--neon-red); 
             margin-bottom: 15px; 
             transition: 0.3s;
         }
-        /* Al girar o hover en PC, opcionalmente cambia a azul o mantiene rojo */
         .service-card:hover .service-icon {
             color: var(--neon-blue);
         }
@@ -315,6 +314,7 @@
         .plan-card.plan-yellow .plan-header h3, .plan-card.plan-yellow .plan-price { color: var(--neon-yellow); }
         .plan-card.plan-yellow .btn { background: var(--neon-yellow); color: black; box-shadow: 0 0 15px rgba(255, 234, 0, 0.4); }
         .plan-card.plan-yellow .check { color: var(--neon-yellow); }
+        .plan-card.plan-yellow .gift-icon { color: var(--neon-yellow); }
 
         /* Estándar: Rojo */
         .plan-card.plan-red {
@@ -324,6 +324,7 @@
         .plan-card.plan-red .btn { background: var(--neon-red); color: white; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
         .plan-card.plan-red .check { color: var(--neon-red); }
         .plan-card.plan-red .plan-badge { background: var(--neon-red); color: white; box-shadow: var(--glow-red); }
+        .plan-card.plan-red .gift-icon { color: var(--neon-red); }
 
         /* Avanzado: Azul */
         .plan-card.plan-blue { border: 1px solid rgba(0, 68, 255, 0.3); }
@@ -331,6 +332,7 @@
         .plan-card.plan-blue .plan-header h3, .plan-card.plan-blue .plan-price { color: var(--neon-blue); }
         .plan-card.plan-blue .btn { background: var(--neon-blue); color: white; box-shadow: 0 0 15px rgba(0, 68, 255, 0.4); }
         .plan-card.plan-blue .check { color: var(--neon-blue); }
+        .plan-card.plan-blue .gift-icon { color: var(--neon-blue); }
 
         .plan-badge {
             position: absolute; top: -15px; right: 50%; transform: translateX(50%);
@@ -340,7 +342,10 @@
         .plan-price span { font-size: 1rem; color: #aaa; font-weight: 400; }
         .plan-features { list-style: none; margin-bottom: 40px; flex-grow: 1; }
         .plan-features li { margin-bottom: 15px; display: flex; align-items: flex-start; font-size: 0.95rem; color: #ccc; gap: 12px; }
-        .plan-features li .extra-cost { color: white; font-size: 0.85em; font-weight: 600; margin-left: auto; opacity: 0.7; }
+        
+        /* ESTILO PARA LOS REGALOS */
+        .plan-features li .bonus-text { font-weight: bold; color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
+        
         .pricing-controls { display: none; }
 
         /* =========================================
@@ -393,12 +398,9 @@
             .section-pad { padding: 80px 0; }
             .vci-grid { grid-template-columns: 1fr; gap: 20px; }
 
-            /* Grid Servicios Móvil (2 columnas) */
             .services-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
             .service-card h3 { font-size: 0.9rem; margin: 10px 0; }
             .service-icon { font-size: 1.8rem; margin-bottom: 5px; }
-            
-            /* CAMBIO: Texto Ver Detalles más chico en móvil */
             .read-more { font-size: 0.7rem; } 
             
             /* Carrusel Móvil */
@@ -469,7 +471,6 @@
         <div class="container">
             <h2 class="section-title reveal">Desglose Técnico</h2>
             <p class="section-subtitle reveal">Nuestros módulos de implementación</p>
-            
             <div class="services-grid reveal" id="services-grid"></div>
         </div>
     </section>
@@ -477,7 +478,7 @@
     <section id="planes" class="pricing section-pad">
         <div class="container">
             <h2 class="section-title reveal">Inversión Inteligente</h2>
-            <p class="section-subtitle reveal">Elige tu nivel de modernización</p>
+            <p class="section-subtitle reveal">Estrategia y Tecnología Aplicada</p>
             <div class="pricing-grid reveal" id="pricing-grid"></div>
             <div class="pricing-controls">
                 <button class="carousel-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
@@ -491,19 +492,15 @@
             <div class="about-text">
                 <h2 class="section-title">Sobre el Fundador</h2>
                 <h3 style="color: var(--neon-red); margin-bottom: 20px; font-size: 1.5rem;">Josué Becerra <span style="font-size: 0.8em; color: var(--text-muted); font-weight: 400;">| Ing. de Sistemas UPC</span></h3>
-                
                 <p style="margin-bottom: 20px; color: var(--text-muted);">
                     Mi misión es revolucionar el barrio. Transformo dueños de negocios tradicionales en emprendedores modernos utilizando herramientas tecnológicas de alto impacto.
                 </p>
-
                 <div class="center-image-container">
                     <img id="profile-photo" src="" alt="Josué Becerra" class="profile-img"> 
                 </div>
-
                 <p style="margin-bottom: 30px; color: var(--text-main); font-weight: 500; border-left: 3px solid var(--neon-blue); padding-left: 15px;">
                     <span style="color:var(--neon-yellow)">"En la era digital, la adaptación no es opcional, es clave para la supervivencia. Destacar es mi principio, y haré que tu negocio también lo haga."</span>
                 </p>
-
                 <a href="https://wa.me/51989435125?text=Hola%20Josué,%20quiero%20conocer%20más%20sobre%20Agencia%20VCI" target="_blank" class="btn btn-primary">Contactar Directamente</a>
             </div>
         </div>
@@ -529,52 +526,50 @@
         }
 
         const servicesData = [
-            { id: 1, icon: "fa-hashtag", title: "Redes Sociales", desc: "Estrategia viral.", details: "Plan quincenal, guiones TikTok y WhatsApp Business Pro." },
-            { id: 2, icon: "fa-laptop-code", title: "Web VCI", desc: "Tu web profesional.", details: "Catálogo online, reservas y conexión a WhatsApp." },
-            { id: 3, icon: "fa-map-location-dot", title: "Google Maps", desc: "Posicionamiento local.", details: "Verificación de pin y reseñas 5 estrellas." },
-            { id: 4, icon: "fa-qrcode", title: "Marketing QR", desc: "Conexión física-digital.", details: "QRs para mostrador y campañas de fidelización." },
-            { id: 5, icon: "fa-table-list", title: "Gestión", desc: "Orden total.", details: "Inventarios y finanzas en Excel automatizado." },
-            { id: 6, icon: "fa-brain", title: "IA Creativa", desc: "Diseño y textos.", details: "Imágenes y copywriting con Inteligencia Artificial." },
-            { id: 7, icon: "fa-arrows-rotate", title: "Soporte", desc: "Mejora continua.", details: "Actualizaciones y adaptación a tendencias." }
+            { id: 1, icon: "fa-mobile-screen-button", title: "Apps de Gestión", desc: "Software a medida.", details: "Aplicaciones para PC o Web conectadas a bases de datos para controlar tu negocio." },
+            { id: 2, icon: "fa-database", title: "Bases de Datos", desc: "Orden total.", details: "Implementación de sistemas en Excel/Sheets o SQL para inventarios y ventas." },
+            { id: 3, icon: "fa-envelope-open-text", title: "Integración Gmail", desc: "Automatización.", details: "Correos automáticos para clientes, facturación y seguimiento." },
+            { id: 4, icon: "fa-laptop-code", title: "Web & Catálogos", desc: "Tu tienda online.", details: "Páginas web modernas y catálogos digitales interactivos." },
+            { id: 5, icon: "fa-robot", title: "IA Aplicada", desc: "Eficiencia.", details: "Uso de Inteligencia Artificial para crear contenido y optimizar procesos." },
+            { id: 6, icon: "fa-map-location-dot", title: "Google Maps", desc: "Visibilidad.", details: "Posicionamiento local para que te encuentren tus vecinos." },
+            { id: 7, icon: "fa-whatsapp", title: "WhatsApp API", desc: "Ventas rápidas.", details: "Configuración profesional, catálogos y respuestas rápidas." },
+            { id: 8, icon: "fa-chart-line", title: "Mejora Continua", desc: "Crecimiento.", details: "Análisis de datos para tomar decisiones y vender más." },
+            { id: 9, icon: "fa-lightbulb", title: "Asesoría Tendencias", desc: "Consultoría.", details: "Guía experta sobre nuevas tendencias digitales y oportunidades de negocio." }
         ];
 
-        // --- DATOS DE PLANES ACTUALIZADOS (DATA DE TU MENSAJE) ---
+        // --- PLANES ACTUALIZADOS (Estrategia: Presencia -> Control -> Sistemas) ---
         const plansData = [
             {
-                title: "Básico", subtitle: "Presencia Digital", price: "350", priceNote: "/ pago único",
+                title: "Básico", subtitle: "Presencia Digital", price: "350", priceNote: "/ único",
                 styleClass: "plan-yellow", 
                 features: [ 
-                    { txt: "Landing Page Funcional", check: true }, 
-                    { txt: "Geolocalización en Google Maps", check: true }, 
-                    { txt: "Config. WhatsApp Business", check: true }, 
-                    { txt: "Adaptaciones y mejora mensual (+ S/. 100)", check: true, isExtra: true } 
+                    { txt: "Landing Page Informativa", check: true }, 
+                    { txt: "Google Maps & WhatsApp Config", check: true }, 
+                    { txt: "Soporte Técnico", check: true },
+                    { txt: "🎁 1 Mantenimiento Mensual", check: true, isGift: true }
                 ],
-                cta: "Empezar con el Básico", wspMsg: "Interesado en Plan Básico"
+                cta: "Empezar Básico", wspMsg: "Interesado en Plan Básico"
             },
             {
-                title: "Estándar", subtitle: "Control & Ventas VCI", price: "500", priceNote: "/ pago único", badge: "Recomendado VCI",
+                title: "Estándar", subtitle: "Control & Ventas", price: "500", priceNote: "/ único", badge: "Más Vendido",
                 styleClass: "plan-red",
                 features: [ 
-                    { txt: "Web con Catálogo y/o Reservas", check: true }, 
-                    { txt: "Geolocalización en Google Maps", check: true }, 
-                    { txt: "Config. WhatsApp Business", check: true }, 
-                    { txt: "Sistema de Inventario y/o Registros", check: true }, 
-                    { txt: "QR Físico para mostrador", check: true }, 
-                    { txt: "Calendario de contenido quincenal (+ S/. 50)", check: true, isExtra: true },
-                    { txt: "Adaptaciones y mejora quincenal (+ S/. 180)", check: true, isExtra: true }
+                    { txt: "Web con Catálogo Interactivo", check: true }, 
+                    { txt: "Sistema de Inventario (Sheets)", check: true }, 
+                    { txt: "QR Físico & Config. WhatsApp", check: true }, 
+                    { txt: "🎁 1 Mantenimiento + 1 Plan Contenido", check: true, isGift: true }
                 ],
-                cta: "Quiero el Plan Estándar", wspMsg: "Interesado en Plan Estándar"
+                cta: "Quiero el Estándar", wspMsg: "Interesado en Plan Estándar"
             },
             {
-                title: "Avanzado", subtitle: "Modernizacion Total", price: "900", priceNote: "/ pago único",
+                title: "Avanzado", subtitle: "Sistemas & Apps", price: "950", priceNote: "/ único",
                 styleClass: "plan-blue", 
                 features: [ 
-                    { txt: "Todo lo del Plan Estándar", check: true }, 
-                    { txt: "Dashboard de Ventas Mensual", check: true }, 
-                    { txt: "Calendario de Contenidos (1 mes)", check: true }, 
-                    { txt: "Asesoria de e-marketing mensual (+ S/. 70)", check: true, isExtra: true },
-                    { txt: "Calendario de contenido quincenal (+ S/. 50)", check: true, isExtra: true },
-                    { txt: "Adaptaciones y mejora quincenal (+ S/. 180)", check: true, isExtra: true }
+                    { txt: "Tu Negocio con Software a Medida", check: true }, 
+                    { txt: "Web + App de Escritorio + BD", check: true }, 
+                    { txt: "Integración Gmail & Dashboard", check: true }, 
+                    { txt: "Integración WhatsApp Avanzada", check: true },
+                    { txt: "🎁 Mantenimiento + Contenido + Marca", check: true, isGift: true }
                 ],
                 cta: "Consultar Avanzado", wspMsg: "Interesado en Plan Avanzado"
             }
@@ -595,7 +590,6 @@
         function getNextIndex() { return (currentPlanIndex + 1) % plansData.length; }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Render Servicios (CON FLIP CARD)
             document.getElementById('services-grid').innerHTML = servicesData.map(s => `
                 <div class="service-card">
                     <div class="service-inner">
@@ -612,7 +606,6 @@
                 </div>
             `).join('');
 
-            // Render Planes
             document.getElementById('pricing-grid').innerHTML = plansData.map((p, i) => `
                 <div class="plan-card ${p.styleClass} ${p.badge ? 'standard' : ''}" data-index="${i}">
                     ${p.badge ? `<span class="plan-badge">${p.badge}</span>` : ''}
@@ -624,9 +617,8 @@
                     <ul class="plan-features">
                         ${p.features.map(f => `
                             <li>
-                                <i class="fas fa-check-circle check"></i> 
-                                ${f.txt}
-                                ${f.isExtra ? '<span class="extra-cost">*</span>' : ''}
+                                <i class="fas ${f.isGift ? 'fa-gift gift-icon' : 'fa-check-circle check'}"></i> 
+                                <span class="${f.isGift ? 'bonus-text' : ''}">${f.txt}</span>
                             </li>`).join('')}
                     </ul>
                     <a href="https://wa.me/51989435125?text=${encodeURIComponent(p.wspMsg)}" target="_blank" class="btn" style="text-align:center; width:100%">${p.cta}</a>
