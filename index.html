@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -33,7 +33,7 @@
             --text-muted: #6b7a94;
             --text-bright: #ffffff;
 
-            --wsp-color: #25d366;
+            --wsp-color: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             --font-main: 'Inter', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
 
@@ -982,12 +982,12 @@
                     <li><a href="#procesos" class="nav-link">Procesos</a></li>
                     <li><a href="#planes" class="nav-link">Planes</a></li>
                     <li><a href="#equipo" class="nav-link" data-i18n="nav.equipo">Equipo</a></li>
-                    <li><a href="https://wa.me/51945924959" class="nav-cta" target="_blank"
+                    <li><a href="https://www.instagram.com/pilco_valeriia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="nav-cta" target="_blank"
                             data-i18n="nav.cta">Contáctanos</a></li>
                     <li>
                         <div class="lang-toggle">
-                            <button class="lang-btn active" onclick="setLang('es')">ES</button>
-                            <button class="lang-btn" onclick="setLang('en')">EN</button>
+                            <button class="lang-btn" onclick="setLang('es')">ES</button>
+                            <button class="lang-btn active" onclick="setLang('en')">EN</button>
                         </div>
                     </li>
                 </ul>
@@ -1265,8 +1265,8 @@
             </div>
             <div class="reveal" id="pricing-container"></div>
             <div class="pricing-cta reveal">
-                <a href="https://wa.me/51945924959?text=Hola,%20quiero%20conocer%20más%20sobre%20los%20precios"
-                    target="_blank" class="btn btn-primary btn-pill"><i class="fab fa-whatsapp"
+                <a href="https://www.instagram.com/pilco_valeriia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                    target="_blank" class="btn btn-primary btn-pill"><i class="fab fa-instagram"
                         style="font-size: 1.1rem;"></i> Consultar precios</a>
             </div>
         </div>
@@ -1281,9 +1281,9 @@
             </div>
             <div class="team-grid stagger" id="team-grid"></div>
             <div style="text-align: center; margin-top: 40px;" class="reveal">
-                <a href="https://wa.me/51945924959?text=Hola,%20quiero%20conocer%20más%20sobre%20Agencia%20VCI"
+                <a href="https://www.instagram.com/pilco_valeriia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
                     target="_blank" class="btn btn-outline btn-pill">
-                    <i class="fab fa-whatsapp"></i> Hablar con la Agencia
+                    <i class="fab fa-instagram"></i> Hablar con la Agencia
                 </a>
             </div>
         </div>
@@ -1294,7 +1294,7 @@
             <div class="urgency-inner">
                 <span class="urgency-text" data-i18n="urgency.text">🔥 Quedan <span>7 de 10</span> cupos a precio de
                     lanzamiento</span>
-                <a href="https://wa.me/51945924959?text=Hola,%20quiero%20agendar%20una%20reunión" target="_blank"
+                <a href="https://www.instagram.com/pilco_valeriia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank"
                     class="btn btn-primary btn-pill" data-i18n="urgency.cta">Agendar reunión</a>
             </div>
         </div>
@@ -1305,8 +1305,8 @@
             <div class="footer-inner">
                 <span class="footer-logo">&lt;VCI/&gt;</span>
                 <div class="social-links">
-                    <a href="https://wa.me/51945924959" target="_blank" class="social-link"><i
-                            class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/pilco_valeriia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="social-link"><i
+                            class="fab fa-instagram"></i></a>
                     <a href="https://www.tiktok.com/@josue.techydata" target="_blank" class="social-link"><i
                             class="fab fa-tiktok"></i></a>
                     <a href="#" class="social-link"><i class="fab fa-github"></i></a>
@@ -1316,8 +1316,8 @@
         </div>
     </footer>
 
-    <a href="https://wa.me/51945924959?text=Hola,%20vi%20su%20web" class="wsp-float" target="_blank"><i
-            class="fab fa-whatsapp"></i></a>
+    <a href="https://www.instagram.com/pilco_valeriia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="wsp-float" target="_blank"><i
+            class="fab fa-instagram"></i></a>
 
     <script>
         function fixUrl(u) {
@@ -1336,42 +1336,65 @@
             { icon: "fa-map-location-dot", title: "Google Maps & WhatsApp", desc: "Que tus vecinos te encuentren fácilmente y te contacten al instante.", tag: "local" }
         ];
 
+        // PRECIOS ACTUALIZADOS EN DÓLARES CON NUEVAS DESCRIPCIONES
         const pricingRows = [
             {
                 service: "Desarrollo Web",
-                basico: { price: "S/ 260", detail: "Web con 3 productos/servicios\nMantenimiento: S/ 26/mes" },
-                medio: { price: "S/ 365", detail: "Catálogo tipo restaurante\nMantenimiento: S/ 36.50/mes" },
-                avanzado: { price: "S/ 500", detail: "Catálogo autoadministrable\nMantenimiento: S/ 50/mes" }
+                basico: { price: "$ 450", detail: "Web con productos/servicios (Informativa - Landing Page)\nMantenimiento: $ 26/mes" },
+                medio: { price: "$ 650", detail: "Catálogo tipo restaurante (Pedidos por servicios de mensajería)\nMantenimiento: $ 36.50/mes" },
+                avanzado: { price: "$ 950", detail: "Catálogo autoadministrable (\nMantenimiento: $ 50/mes" }
             },
             {
                 service: "Creación de Contenido",
-                basico: { price: "S/ 200", detail: "3 videos y 1 post" },
-                medio: { price: "S/ 290", detail: "5 videos y 2 posts" },
-                avanzado: { price: "S/ 370", detail: "7 videos y 3 posts" }
+                basico: { price: "$ 200", detail: "3 videos y 1 post" },
+                medio: { price: "$ 290", detail: "5 videos y 2 posts" },
+                avanzado: { price: "$ 370", detail: "7 videos y 3 posts" }
             },
             {
-                service: "Config. Maps y WSP",
-                basico: { price: "S/ 80", detail: "Tarifa única o S/ 40 c/u" },
-                medio: { price: "S/ 80", detail: "Tarifa única o S/ 40 c/u" },
-                avanzado: { price: "S/ 80", detail: "Tarifa única o S/ 40 c/u\n+ S/ 30 mejora de perfil" }
+                service: "Config. Maps y WSP Bussines",
+                basico: { price: "$ 80", detail: "Tarifa única o $ 40 c/u" },
+                medio: { price: "$ 80", detail: "Tarifa única o $ 40 c/u" },
+                avanzado: { price: "$ 80", detail: "Tarifa única o $ 40 c/u\n+ $ 30 mejora de perfil" }
             },
             {
                 service: "🎁 Paquete Completo",
-                basico: { price: "S/ 540", detail: "" },
-                medio: { price: "S/ 730", detail: "" },
-                avanzado: { price: "S/ 920", detail: "" },
+                basico: { price: "$ 700", detail: "" },
+                medio: { price: "$ 1000", detail: "" },
+                avanzado: { price: "$ 1350", detail: "" },
                 isPack: true
             }
         ];
 
         const projectsData = [
-            /*{
+            /*
+            {
                 title: "Rollitos Heladería",
                 desc: "Web con catálogo interactivo y pedidos online.",
                 image: "https://drive.google.com/file/d/1QS-naoMc4evnBRqKaAD3DNgy3TSjl_h8/view?usp=drive_link", 
                 tags: ["Web", "Catálogo"],
                 url: "https://enchanting-centaur-ffa8b7.netlify.app/"
             },*/
+            {
+                title: "King Kong Hamburguesería",
+                desc: "Plataforma web para hamburguesería.",
+                image: "https://drive.google.com/file/d/1CPPliYb6Vu3DFr6qjqQ8QEJnleRBrWRt/view?usp=drive_link",
+                tags: ["Web", "Fast Food"],
+                url: "https://extraordinary-starlight-9ae8a3.netlify.app/"
+            },
+            {
+                title: "Cover 97 Barbería",
+                desc: "Sitio web para barbería moderna.",
+                image: "https://drive.google.com/file/d/1XM0XZlCvYwva07v6eiv166AG3ow2BPP3/view?usp=drive_link",
+                tags: ["Web", "Barbería"],
+                url: "https://leafy-narwhal-cb48ed.netlify.app/"
+            },
+            {
+                title: "Bambino Pizzeria",
+                desc: "Web con menú digital.",
+                image: "https://drive.google.com/file/d/1sEc7Y7neW73P05SPIPWq9cK12hIxgg03/view?usp=drive_link",
+                tags: ["Web", "Menú"],
+                url: "https://aesthetic-salmiakki-b576b4.netlify.app/"
+            },
             {
                 title: "FioreDiAle Florería",
                 desc: "E-commerce para florería.",
@@ -1386,13 +1409,7 @@
                 tags: ["Web", "Landing"],
                 url: "https://delifresas.site/"
             },
-            {
-                title: "Bambino Pizzeria",
-                desc: "Web con menú digital.",
-                image: "https://drive.google.com/file/d/1sEc7Y7neW73P05SPIPWq9cK12hIxgg03/view?usp=drive_link",
-                tags: ["Web", "Menú"],
-                url: "https://aesthetic-salmiakki-b576b4.netlify.app/"
-            },
+
             {
                 title: "Big Patas Restobar",
                 desc: "Página moderna para restobar local.",
@@ -1406,21 +1423,8 @@
                 image: "https://drive.google.com/file/d/1fWRJRWifqbL90ckCryrEhAY_SXROrOM8/view?usp=drive_link",
                 tags: ["Web", "Restaurante"],
                 url: "https://ghost1136.github.io/AnticucheriaMelchorita/"
-            },
-            {
-                title: "King Kong Hamburguesería",
-                desc: "Plataforma web para hamburguesería.",
-                image: "https://drive.google.com/file/d/1CPPliYb6Vu3DFr6qjqQ8QEJnleRBrWRt/view?usp=drive_link",
-                tags: ["Web", "Fast Food"],
-                url: "https://extraordinary-starlight-9ae8a3.netlify.app/"
-            },
-            {
-                title: "Cover 97 Barbería",
-                desc: "Sitio web para barbería moderna.",
-                image: "https://drive.google.com/file/d/1XM0XZlCvYwva07v6eiv166AG3ow2BPP3/view?usp=drive_link",
-                tags: ["Web", "Barbería"],
-                url: "https://leafy-narwhal-cb48ed.netlify.app/"
             }
+            
         ];
 
         const teamData = [
@@ -1518,7 +1522,7 @@
         const reverseDict = {};
         for (const [es, en] of Object.entries(dict)) reverseDict[en] = es;
 
-        let currentLang = localStorage.getItem('vci-lang') || 'es';
+        let currentLang = localStorage.getItem('vci-lang') || 'en';
         const originalTexts = new Map();
 
         function translateNode(node, toDict) {
