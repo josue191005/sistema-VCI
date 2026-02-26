@@ -1,433 +1,995 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Agencia VCI | Ingeniería & Marketing</title>
     <meta name="description" content="Soluciones tecnológicas: Apps, Webs, Bases de Datos y Automatización en Lima.">
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* =========================================
-           1. VARIABLES & PALETA TRICOLOR NEÓN
-           ========================================= */
         :root {
-            --bg-dark: #020202;          
-            --bg-surface: #0a0a0a;       
-            
-            /* PALETA DEFINITIVA */
-            --neon-red: #FF0000;     /* ROJO PURO */
-            --neon-yellow: #FFEA00;  /* AMARILLO ELÉCTRICO */
-            --neon-blue: #0044FF;    /* AZUL NEÓN PROFUNDO */
-            
-            --neon-wsp: #25D366;     /* Verde WhatsApp */
-            
-            --text-main: #ffffff;
-            --text-muted: #9ca3af;
+            --bg-dark: #03060d;
+            --bg-surface: #060b18;
+            --bg-card: #0a0f1e;
+            --bg-card-hover: #0f1528;
+            --border-color: rgba(0, 229, 255, 0.08);
+            --border-glow: rgba(0, 229, 255, 0.25);
 
-            --font-title: 'Oswald', sans-serif;
-            --font-body: 'Roboto', sans-serif;
+            --accent-cyan: #00e5ff;
+            --accent-blue: #3d7eff;
+            --accent-green: #39ff8e;
+            --accent-gradient: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+            --accent-gradient-green: linear-gradient(135deg, var(--accent-cyan), var(--accent-green));
 
-            --container-width: 1200px;
-            --header-height: 80px;
-            
-            /* Efectos Glow */
-            --glow-red: 0 0 30px rgba(255, 0, 0, 0.6);
-            --glow-yellow: 0 0 25px rgba(255, 234, 0, 0.5);
-            --glow-blue: 0 0 30px rgba(0, 68, 255, 0.6);
-            --glow-wsp: 0 0 25px rgba(37, 211, 102, 0.5);
-            
-            --transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            --text-main: #e8ecf4;
+            --text-muted: #6b7a94;
+            --text-bright: #ffffff;
+
+            --wsp-color: #25d366;
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --container-width: 1140px;
+            --header-height: 72px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* =========================================
-           2. BASES & ANIMACIONES
-           ========================================= */
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        html { scroll-behavior: smooth; scroll-padding-top: var(--header-height); }
-        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--header-height);
+        }
+
         body {
             background-color: var(--bg-dark);
-            background-image: radial-gradient(circle at 50% 0%, #0f0000 0%, #000 80%);
             color: var(--text-main);
-            font-family: var(--font-body);
+            font-family: var(--font-main);
             line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* ANIMACIÓN LOOP */
-        .reveal {
-            opacity: 0;
-            transform: translateY(60px) scale(0.9);
-            transition: all 0.7s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .container { max-width: var(--container-width); margin: 0 auto; padding: 0 24px; width: 100%; }
-
-        h1, h2, h3, h4 { font-family: var(--font-title); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
-
-        .section-title {
-            font-size: clamp(2.5rem, 5vw, 4rem); 
-            text-align: center;
-            margin-bottom: 0.5rem; 
-            color: white; 
-        }
-        
-        .section-subtitle {
-            text-align: center; 
-            color: var(--neon-blue); 
-            margin-bottom: 4rem;
-            font-size: 1.1rem; 
-            font-weight: 500; 
-            letter-spacing: 3px; 
-            text-transform: uppercase;
+        /* GRID BACKGROUND */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background-image:
+                linear-gradient(rgba(0, 229, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 229, 255, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
         }
 
-        /* =========================================
-           3. BOTONES
-           ========================================= */
-        .btn {
-            display: inline-block; padding: 16px 40px;
-            font-family: var(--font-title); font-weight: 700; text-transform: uppercase;
-            text-decoration: none; border: none; cursor: pointer;
-            transition: var(--transition); border-radius: 50px;
-            letter-spacing: 1px; position: relative; overflow: hidden; font-size: 1rem;
+        .grid-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 229, 255, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(61, 126, 255, 0.04) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+            position: relative;
             z-index: 1;
         }
 
-        .btn-primary { 
-            background: var(--neon-red); color: white; box-shadow: var(--glow-red);
-        }
-        .btn-primary:hover {
-            transform: translateY(-5px) scale(1.05); background: #ff1a1a; box-shadow: 0 0 50px var(--neon-red);
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
         }
 
-        .btn-accent { 
-            background: transparent; color: var(--neon-yellow); 
-            border: 2px solid var(--neon-yellow); box-shadow: inset 0 0 15px rgba(255, 234, 0, 0.1);
-        }
-        .btn-accent:hover { 
-            background: var(--neon-yellow); color: #000; transform: translateY(-5px); box-shadow: 0 0 40px var(--neon-yellow);
+        .section-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            opacity: 0.8;
         }
 
-        /* =========================================
-           4. HEADER
-           ========================================= */
-        header {
-            position: fixed; top: 0; left: 0; width: 100%; height: var(--header-height);
-            background: rgba(0, 0, 0, 0.9); backdrop-filter: blur(20px);
-            z-index: 1000; border-bottom: 1px solid rgba(255, 0, 0, 0.2);
-        }
-        
-        .header-container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
-        
-        .logo { font-family: var(--font-title); font-size: 2rem; font-weight: 700; color: white; text-decoration: none; letter-spacing: 2px; }
-        .logo span { color: var(--neon-red); }
-        
-        .nav-menu { display: flex; list-style: none; gap: 30px; }
-        
-        .nav-link { 
-            color: var(--text-main); text-decoration: none; font-weight: 500; 
-            text-transform: uppercase; font-size: 0.9rem; position: relative; transition: 0.3s;
-        }
-        .nav-link:hover { color: var(--neon-red); text-shadow: 0 0 10px var(--neon-red); }
-        
-        .hamburger { display: none; cursor: pointer; color: var(--neon-red); font-size: 1.8rem; }
+        .section-tag::before { content: '//'; opacity: 0.5; }
 
-        /* =========================================
-           5. HERO
-           ========================================= */
-        .hero {
-            min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.95)), 
-                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
-            padding: calc(var(--header-height) + 40px) 20px 60px;
+        .section-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            margin-bottom: 1rem;
+            color: var(--text-bright);
+            letter-spacing: -0.03em;
         }
-        
-        .hero h1 { 
-            font-size: 5rem; margin-bottom: 20px; line-height: 1.1; 
-            text-transform: uppercase; font-weight: 800;
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 550px;
+            line-height: 1.7;
         }
-        
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header .section-subtitle { margin-inline: auto; }
+
         .highlight-text {
-            color: transparent; -webkit-text-stroke: 2px var(--neon-red); position: relative; display: inline-block;
-        }
-        .highlight-text::before {
-            content: 'MODERNIZA'; position: absolute; left: 0; top: 0; color: var(--neon-red); width: 0%; overflow: hidden;
-            border-right: 4px solid var(--neon-blue); animation: fillText 3s linear infinite alternate;
-            white-space: nowrap; text-shadow: 0 0 20px var(--neon-red);
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .hero-subtitle { 
-            color: var(--neon-yellow); font-family: var(--font-title); letter-spacing: 3px; 
-            margin-bottom: 20px; display: block; font-weight: 600; 
-        }
-        .hero p { 
-            font-size: 1.2rem; margin-bottom: 40px; color: var(--text-muted); max-width: 600px; margin-inline: auto;
+        .section-pad { padding: 100px 0; }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            font-family: var(--font-main);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 8px;
+            position: relative;
         }
 
-        @keyframes fillText { 0% { width: 0%; } 50%, 100% { width: 100%; border-color: transparent; } }
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #030610;
+            font-weight: 600;
+            box-shadow: 0 4px 20px rgba(0, 229, 255, 0.2);
+        }
 
-        /* =========================================
-           6. VCI SECTION
-           ========================================= */
-        .section-pad { padding: 120px 0; }
-        .vci-section { background-color: var(--bg-dark); }
-        
-        .vci-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
-        
+        .btn-primary:hover {
+            box-shadow: 0 6px 30px rgba(0, 229, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--accent-cyan);
+            border: 1px solid var(--border-glow);
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 229, 255, 0.06);
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(0, 229, 255, 0.1);
+        }
+
+        .btn-pill { border-radius: 50px; }
+
+        /* HEADER */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--header-height);
+            background: rgba(3, 6, 13, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100%;
+        }
+
+        .logo {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span { color: var(--text-muted); }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.85rem;
+            padding: 8px 14px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .nav-link:hover {
+            color: var(--accent-cyan);
+            background: rgba(0, 229, 255, 0.05);
+        }
+
+        .nav-cta {
+            margin-left: 10px;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            background: var(--accent-gradient);
+            color: #030610;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .nav-cta:hover { box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            color: var(--accent-cyan);
+            font-size: 1.3rem;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: calc(var(--header-height) + 60px) 20px 80px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 229, 255, 0.06);
+            border: 1px solid rgba(0, 229, 255, 0.15);
+            color: var(--accent-cyan);
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            font-weight: 500;
+            margin-bottom: 28px;
+        }
+
+        .hero-badge .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(57, 255, 142, 0.4); }
+            50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(57, 255, 142, 0); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 6vw, 4.5rem);
+            margin-bottom: 24px;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            max-width: 850px;
+            margin-inline: auto;
+            color: var(--text-bright);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-inline: auto;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .hero-terminal {
+            margin-top: 50px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            opacity: 0.5;
+        }
+
+        .hero-terminal .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--accent-cyan);
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent-cyan);
+            font-size: 1rem;
+            animation: float 2.5s infinite ease-in-out;
+            text-decoration: none;
+            opacity: 0.5;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(-50%); }
+            50% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        /* PROJECTS */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: var(--transition);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(0, 229, 255, 0.12);
+        }
+
+        .project-img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--bg-surface);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .project-img img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-img img { transform: scale(1.05); }
+
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(3, 6, 13, 0.9) 0%, transparent 60%);
+            display: flex;
+            align-items: flex-end;
+            justify-content: flex-end;
+            padding: 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .project-card:hover .project-overlay { opacity: 1; }
+        .project-overlay .btn { font-size: 0.8rem; padding: 8px 16px; }
+        .project-body { padding: 24px; flex-grow: 1; }
+        .project-body h3 { font-size: 1.1rem; color: var(--text-bright); margin-bottom: 8px; }
+        .project-body p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.5; }
+        .project-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .project-tag {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            background: rgba(0, 229, 255, 0.08);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(0, 229, 255, 0.12);
+        }
+
+        .swipe-indicator { display: none; }
+
+        /* VCI SYSTEM */
+        .vci-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
         .vci-card {
-            background: var(--bg-surface); padding: 40px 30px; border: 1px solid rgba(255, 255, 255, 0.05); transition: var(--transition);
+            background: var(--bg-card);
+            padding: 28px 24px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
-        .vci-card:hover { transform: translateY(-10px); background: #111; }
-        
-        .vci-card:nth-child(1) { border-top: 3px solid var(--neon-yellow); }
-        .vci-card:nth-child(2) { border-top: 3px solid var(--neon-red); }
-        .vci-card:nth-child(3) { border-top: 3px solid var(--neon-blue); }
-        
-        .vci-card h3 { font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
-        .vci-card i { font-size: 1.5rem; }
-        .vci-card:nth-child(1) i { color: var(--neon-yellow); }
-        .vci-card:nth-child(2) i { color: var(--neon-red); }
-        .vci-card:nth-child(3) i { color: var(--neon-blue); }
 
-        /* =========================================
-           7. SERVICIOS (FLIP CARDS)
-           ========================================= */
-        .services { background-color: #050505; }
-        .services-grid { 
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 25px; 
+        .vci-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-gradient);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
-        
-        /* Contenedor principal de la tarjeta */
+
+        .vci-card:hover::before { opacity: 1; }
+
+        .vci-card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.15);
+        }
+
+        .vci-card .card-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            background: rgba(0, 229, 255, 0.08);
+            color: var(--accent-cyan);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+
+        .vci-card h3 { font-size: 1.25rem; margin-bottom: 12px; color: var(--text-bright); }
+        .vci-card p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
+
+        /* SERVICES — BENTO GRID CON EFECTO 3D FLIP DE 2 EN 2 */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
         .service-card {
-            background-color: transparent;
-            perspective: 1000px; /* Necesario para efecto 3D */
-            aspect-ratio: 1 / 1;
+            background: transparent;
+            perspective: 1000px;
+            border: none;
+            padding: 0;
+            min-height: 240px;
+            text-decoration: none;
+            color: inherit;
             cursor: pointer;
         }
 
-        /* Contenedor interno que gira */
-        .service-inner {
+        .service-card-inner {
             position: relative;
             width: 100%;
             height: 100%;
             text-align: center;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
         }
 
-        /* Efecto Hover: Girar */
-        .service-card:hover .service-inner {
+        /* Hover en PC */
+        @media (hover: hover) {
+            .service-card:hover .service-card-inner {
+                transform: rotateY(180deg);
+            }
+        }
+
+        /* Click en móvil (clase añadida mediante JS) */
+        .service-card.flipped .service-card-inner {
             transform: rotateY(180deg);
         }
 
-        /* Caras de la tarjeta */
-        .service-front, .service-back {
+        .service-card-front, .service-card-back {
             position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            backface-visibility: hidden; /* Oculta la cara trasera */
+            backface-visibility: hidden;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .service-card-front:hover {
+            border-color: var(--border-glow);
+            box-shadow: 0 8px 30px rgba(0, 229, 255, 0.06);
+        }
+
+        .service-card-back {
+            background: var(--bg-card-hover);
+            transform: rotateY(180deg);
+            border-color: var(--accent-cyan);
             padding: 20px;
-            border-radius: 4px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
         }
 
-        /* Estilos Cara Frontal */
-        .service-front {
-            background: var(--bg-surface);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .service-front:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 25px rgba(0, 68, 255, 0.3);
-        }
+        .service-icon { font-size: 2rem; color: var(--accent-cyan); margin-bottom: 18px; transition: var(--transition); }
+        .service-card-front h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-bright); }
+        .service-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+        .service-tag { margin-top: 16px; font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-cyan); opacity: 0.7; }
 
-        /* Estilos Cara Trasera */
-        .service-back {
-            background: #111;
-            color: white;
-            transform: rotateY(180deg); /* Ya está girada inicialmente */
-            border: 1px solid var(--neon-yellow);
-            box-shadow: inset 0 0 20px rgba(255, 234, 0, 0.1);
+        /* PROCESS SECTIONS - CAMINOS */
+        .process-section { padding: 80px 0; }
+        .process-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 3rem;
+            gap: 20px;
         }
+        .process-header .section-subtitle { max-width: 400px; }
 
-        /* ICONOS EN ROJO */
-        .service-icon { 
-            font-size: 3rem; 
-            color: var(--neon-red); 
-            margin-bottom: 15px; 
-            transition: 0.3s;
+        .process-grid {
+            display: grid;
+            gap: 16px;
+            position: relative;
         }
-        .service-card:hover .service-icon {
-            color: var(--neon-blue);
-        }
+        .process-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+        .process-grid.cols-5 { grid-template-columns: repeat(5, 1fr); }
 
-        .service-card h3 { font-size: 1.3rem; margin-bottom: 10px; }
-        
-        /* Texto "Ver detalles" en AMARILLO */
-        .read-more { 
-            font-size: 0.9rem; 
-            color: var(--neon-yellow); 
-            font-weight: 700; 
-            text-transform: uppercase; 
-            margin-top: auto; 
-            letter-spacing: 1px;
+        .process-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 28px 20px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
         }
 
-        .service-desc {
-            font-size: 0.95rem;
-            color: #ddd;
-            line-height: 1.5;
+        /* Flechas conectores en PC */
+        @media (min-width: 993px) {
+            .process-step:not(:last-child)::after {
+                content: '\f061';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                position: absolute;
+                top: 50%;
+                right: -16px;
+                transform: translate(50%, -50%);
+                color: var(--accent-cyan);
+                font-size: 1.2rem;
+                opacity: 0;
+                z-index: 1;
+                animation: arrowPulse 2s infinite;
+            }
+            .process-step.active:not(:last-child)::after {
+                opacity: 0.6;
+            }
         }
 
-        /* =========================================
-           8. PLANES (COLORES INDIVIDUALES)
-           ========================================= */
-        .pricing { background-color: var(--bg-dark); }
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; align-items: center; }
-        
-        .plan-card {
-            background: var(--bg-surface); padding: 50px 35px; border: 1px solid rgba(255,255,255,0.05);
-            position: relative; transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); 
-            display: flex; flex-direction: column; height: 100%; border-radius: 20px;
+        @keyframes arrowPulse {
+            0% { transform: translate(30%, -50%); opacity: 0.2; }
+            50% { transform: translate(70%, -50%); opacity: 0.8; }
+            100% { transform: translate(30%, -50%); opacity: 0.2; }
         }
 
-        /* Básico: Amarillo */
-        .plan-card.plan-yellow { border: 1px solid rgba(255, 234, 0, 0.3); }
-        .plan-card.plan-yellow:hover { border-color: var(--neon-yellow); box-shadow: var(--glow-yellow); transform: translateY(-10px); }
-        .plan-card.plan-yellow .plan-header h3, .plan-card.plan-yellow .plan-price { color: var(--neon-yellow); }
-        .plan-card.plan-yellow .btn { background: var(--neon-yellow); color: black; box-shadow: 0 0 15px rgba(255, 234, 0, 0.4); }
-        .plan-card.plan-yellow .check { color: var(--neon-yellow); }
-        .plan-card.plan-yellow .gift-icon { color: var(--neon-yellow); }
-
-        /* Estándar: Rojo */
-        .plan-card.plan-red {
-            border: 2px solid var(--neon-red); box-shadow: var(--glow-red); transform: scale(1.05); z-index: 2; background: #0f0000;
-        }
-        .plan-card.plan-red .plan-header h3, .plan-card.plan-red .plan-price { color: var(--neon-red); }
-        .plan-card.plan-red .btn { background: var(--neon-red); color: white; box-shadow: 0 0 20px rgba(255, 0, 0, 0.6); }
-        .plan-card.plan-red .check { color: var(--neon-red); }
-        .plan-card.plan-red .plan-badge { background: var(--neon-red); color: white; box-shadow: var(--glow-red); }
-        .plan-card.plan-red .gift-icon { color: var(--neon-red); }
-
-        /* Avanzado: Azul */
-        .plan-card.plan-blue { border: 1px solid rgba(0, 68, 255, 0.3); }
-        .plan-card.plan-blue:hover { border-color: var(--neon-blue); box-shadow: var(--glow-blue); transform: translateY(-10px); }
-        .plan-card.plan-blue .plan-header h3, .plan-card.plan-blue .plan-price { color: var(--neon-blue); }
-        .plan-card.plan-blue .btn { background: var(--neon-blue); color: white; box-shadow: 0 0 15px rgba(0, 68, 255, 0.4); }
-        .plan-card.plan-blue .check { color: var(--neon-blue); }
-        .plan-card.plan-blue .gift-icon { color: var(--neon-blue); }
-
-        .plan-badge {
-            position: absolute; top: -15px; right: 50%; transform: translateX(50%);
-            padding: 5px 25px; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; border-radius: 50px;
-        }
-        .plan-price { font-size: 3.5rem; font-family: var(--font-title); margin: 25px 0; font-weight: 700; }
-        .plan-price span { font-size: 1rem; color: #aaa; font-weight: 400; }
-        .plan-features { list-style: none; margin-bottom: 40px; flex-grow: 1; }
-        .plan-features li { margin-bottom: 15px; display: flex; align-items: flex-start; font-size: 0.95rem; color: #ccc; gap: 12px; }
-        
-        /* ESTILO PARA LOS REGALOS */
-        .plan-features li .bonus-text { font-weight: bold; color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.3); }
-        
-        .pricing-controls { display: none; }
-
-        /* =========================================
-           9. NOSOTROS
-           ========================================= */
-        .about { background: #050505; }
-        .about-content { display: flex; flex-direction: column; align-items: center; max-width: 800px; margin: 0 auto; text-align: center; }
-        .center-image-container { margin: 40px 0; display: flex; justify-content: center; width: 100%; }
-        .profile-img {
-            width: 250px; height: 250px; object-fit: cover; border: 2px solid var(--neon-red);
-            padding: 8px; background: #000; box-shadow: 0 0 30px rgba(255, 0, 0, 0.3);
+        .process-step:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.08);
         }
 
-        /* =========================================
-           10. FOOTER & WSP
-           ========================================= */
-        footer { background: #000; padding: 60px 0 30px; text-align: center; border-top: 1px solid #222; }
-        .social-links { margin-bottom: 30px; display: flex; justify-content: center; gap: 20px; }
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            color: #030610;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-bottom: 14px;
+        }
+
+        .step-icon { font-size: 1.6rem; margin-bottom: 14px; display: block; color: var(--accent-cyan); transition: var(--transition); }
+        .process-step:hover .step-icon { color: var(--accent-green); transform: scale(1.1); }
+        .process-step h4 { font-size: 0.95rem; color: var(--text-bright); margin-bottom: 8px; }
+        .process-step p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* PRICING TABLE */
+        .pricing-table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+        }
+        .pricing-table { width: 100%; border-collapse: collapse; min-width: 700px; }
+        .pricing-table thead th {
+            padding: 20px 24px; font-size: 0.9rem; font-weight: 600; text-align: center;
+            color: var(--text-bright); border-bottom: 1px solid var(--border-color); background: rgba(0, 229, 255, 0.03);
+        }
+        .pricing-table thead th:first-child { text-align: left; background: transparent; }
+        .pricing-table thead th.th-highlight { background: rgba(0, 229, 255, 0.08); }
+        .pricing-table thead th .th-badge {
+            display: inline-block; background: var(--accent-gradient); color: #030610; font-family: var(--font-mono);
+            font-size: 0.6rem; font-weight: 700; padding: 2px 10px; border-radius: 50px; margin-left: 6px; vertical-align: middle;
+        }
+        .pricing-table tbody td {
+            padding: 18px 24px; font-size: 0.88rem; color: var(--text-muted); border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            text-align: center; vertical-align: top; transition: background 0.3s;
+        }
+        .pricing-table tbody td:first-child { text-align: left; font-weight: 600; color: var(--text-main); }
+        .pricing-table tbody tr:hover td { background: rgba(0, 229, 255, 0.03); }
+        .pricing-table tbody tr:last-child td {
+            border-bottom: none; font-weight: 700; font-size: 1rem; color: var(--text-bright);
+            padding: 22px 24px; background: rgba(0, 229, 255, 0.04);
+        }
+        .price-main { display: block; font-size: 1.05rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 4px; }
+        .price-detail { display: block; font-size: 0.75rem; color: var(--text-muted); line-height: 1.5; }
+        .pack-price {
+            font-size: 1.2rem; font-weight: 800; background: var(--accent-gradient);
+            -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .pricing-cta { text-align: center; margin-top: 40px; }
+
+        /* TEAM */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .team-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 36px 20px 28px;
+        }
+
+        .team-card:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 229, 255, 0.08);
+        }
+
+        @keyframes float-avatar {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .team-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 3px solid var(--border-color);
+            margin-bottom: 20px;
+            transition: var(--transition);
+            animation: float-avatar 4s ease-in-out infinite;
+        }
+
+        .team-card:nth-child(odd) .team-avatar { animation-delay: 0s; }
+        .team-card:nth-child(even) .team-avatar { animation-delay: 2s; }
+
+        .team-avatar img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        .team-card:hover .team-avatar { border-color: var(--accent-cyan); box-shadow: 0 0 24px rgba(0, 229, 255, 0.15); }
+        .team-card:hover .team-avatar img { transform: scale(1.05); }
+        .team-info h3 { font-size: 1.15rem; color: var(--text-bright); margin-bottom: 4px; }
+        .team-info .role { font-size: 0.78rem; color: var(--accent-cyan); font-weight: 500; font-family: var(--font-mono); margin-bottom: 12px; }
+        .team-info .team-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* FOOTER */
+        footer { background: var(--bg-surface); padding: 50px 0 30px; border-top: 1px solid var(--border-color); }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .footer-logo { font-family: var(--font-mono); font-size: 1rem; color: var(--accent-cyan); font-weight: 700; }
+        .social-links { display: flex; gap: 12px; }
         .social-link {
-            display: flex; justify-content: center; align-items: center; width: 55px; height: 55px;
-            background: #111; color: white; border-radius: 50%;
-            font-size: 1.4rem; transition: var(--transition); text-decoration: none;
+            display: flex; justify-content: center; align-items: center; width: 40px; height: 40px;
+            background: rgba(0, 229, 255, 0.05); color: var(--text-muted); border-radius: 8px;
+            font-size: 1rem; transition: var(--transition); text-decoration: none; border: 1px solid var(--border-color);
         }
-        .social-link:hover { background: var(--neon-blue); color: #fff; transform: translateY(-5px); box-shadow: var(--glow-blue); }
+        .social-link:hover { color: var(--accent-cyan); border-color: var(--border-glow); background: rgba(0, 229, 255, 0.1); transform: translateY(-2px); }
+        .footer-text { color: var(--text-muted); font-size: 0.8rem; text-align: center; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border-color); }
 
+        /* WSP FLOAT */
         .wsp-float {
-            position: fixed; bottom: 30px; right: 30px; 
-            background: var(--neon-wsp); color: #fff; 
-            width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center;
-            font-size: 32px; box-shadow: var(--glow-wsp); z-index: 1500; text-decoration: none !important;
+            position: fixed; bottom: 24px; right: 24px; background: var(--wsp-color); color: #fff;
+            width: 56px; height: 56px; border-radius: 14px; display: flex; justify-content: center;
+            align-items: center; font-size: 26px; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.35);
+            z-index: 1500; text-decoration: none !important; transition: var(--transition);
         }
-        .wsp-float:hover { transform: scale(1.1); }
+        .wsp-float:hover { transform: scale(1.08) translateY(-2px); }
 
-        /* =========================================
-           11. RESPONSIVE
-           ========================================= */
-        @media (max-width: 992px) { .hero h1 { font-size: 4rem; } }
+        /* ANIMATIONS MEJORADAS Y DIRECCIONALES */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            filter: blur(4px);
+            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), filter 0.7s ease-out;
+        }
+        .reveal-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            filter: blur(4px);
+            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), filter 0.7s ease-out;
+        }
+        .reveal-right {
+            opacity: 0;
+            transform: translateX(50px);
+            filter: blur(4px);
+            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), filter 0.7s ease-out;
+        }
+        /* NUEVA ANIMACIÓN: Aparición más lenta desde la izquierda para VCI */
+        .reveal-left-slow {
+            opacity: 0;
+            transform: translateX(-50px);
+            filter: blur(4px);
+            transition: opacity 1.5s ease-out, transform 1.5s cubic-bezier(0.25, 1, 0.5, 1), filter 1.5s ease-out;
+        }
+        .reveal-zoom {
+            opacity: 0;
+            transform: scale(0.8) translateY(20px);
+            filter: blur(4px);
+            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), filter 0.7s ease-out;
+        }
+
+        .reveal.active, .reveal-left.active, .reveal-right.active, .reveal-zoom.active, .reveal-left-slow.active {
+            opacity: 1;
+            transform: translate(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* STATS */
+        .stats-bar { padding: 60px 0; background: rgba(0, 229, 255, 0.02); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+        .stat-item .stat-number { font-size: 2.5rem; font-weight: 800; background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; display: block; }
+        .stat-item .stat-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
+        /* WHY US */
+        .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .why-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 32px 24px; text-align: center; transition: var(--transition); }
+        .why-card:hover { border-color: var(--border-glow); transform: translateY(-4px); box-shadow: 0 8px 25px rgba(0, 229, 255, 0.06); }
+        .why-card .why-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+        .why-card h4 { font-size: 1rem; color: var(--text-bright); margin-bottom: 8px; }
+        .why-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+        /* URGENCY BANNER */
+        .urgency-banner { padding: 20px 0; background: linear-gradient(90deg, rgba(0, 229, 255, 0.08), rgba(61, 126, 255, 0.08)); border-top: 1px solid var(--border-glow); border-bottom: 1px solid var(--border-glow); }
+        .urgency-inner { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; text-align: center; }
+        .urgency-inner .urgency-text { font-size: 0.95rem; font-weight: 600; color: var(--text-bright); }
+        .urgency-inner .urgency-text span { color: var(--accent-cyan); }
+
+        /* LANG TOGGLE */
+        .lang-toggle { display: inline-flex; align-items: center; gap: 2px; background: rgba(0, 229, 255, 0.06); border: 1px solid var(--border-color); border-radius: 6px; padding: 2px; margin-left: 8px; }
+        .lang-btn { padding: 5px 12px; font-size: 0.75rem; font-weight: 600; border-radius: 4px; cursor: pointer; transition: var(--transition); color: var(--text-muted); background: transparent; border: none; font-family: var(--font-main); }
+        .lang-btn.active { background: var(--accent-gradient); color: #030610; }
+
+        /* STAGGER (Efecto cascada regular) */
+        .stagger > *:nth-child(1) { transition-delay: 0s; }
+        .stagger > *:nth-child(2) { transition-delay: 0.15s; }
+        .stagger > *:nth-child(3) { transition-delay: 0.30s; }
+        .stagger > *:nth-child(4) { transition-delay: 0.45s; }
+        .stagger > *:nth-child(5) { transition-delay: 0.60s; }
+        .stagger > *:nth-child(6) { transition-delay: 0.75s; }
+
+        /* NUEVO: STAGGER LENTO (Para procesos de escritorio) */
+        @media (min-width: 993px) {
+            .stagger-slow > *:nth-child(1) { transition-delay: 0s; }
+            .stagger-slow > *:nth-child(2) { transition-delay: 0.7s; }
+            .stagger-slow > *:nth-child(3) { transition-delay: 1.4s; }
+            .stagger-slow > *:nth-child(4) { transition-delay: 2.1s; }
+            .stagger-slow > *:nth-child(5) { transition-delay: 2.8s; }
+            .stagger-slow > *:nth-child(6) { transition-delay: 3.5s; }
+        }
+        @media (max-width: 992px) {
+            /* En móvil lo mantenemos más rápido para no perjudicar la experiencia */
+            .stagger-slow > *:nth-child(1) { transition-delay: 0s; }
+            .stagger-slow > *:nth-child(2) { transition-delay: 0.15s; }
+            .stagger-slow > *:nth-child(3) { transition-delay: 0.30s; }
+            .stagger-slow > *:nth-child(4) { transition-delay: 0.45s; }
+            .stagger-slow > *:nth-child(5) { transition-delay: 0.60s; }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 992px) {
+            .hero h1 { font-size: 3rem; }
+            .vci-grid { grid-template-columns: 1fr; }
+            
+            /* Servicios en Móvil ajustado para que sea siempre de 2 en 2 */
+            .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .service-card { min-height: 220px; }
+            .service-card-front, .service-card-back { padding: 16px; }
+            .service-icon { font-size: 1.5rem; margin-bottom: 12px; }
+            .service-card-front h3 { font-size: 0.95rem; }
+            .service-tag { font-size: 0.65rem; }
+            .service-desc { font-size: 0.8rem; }
+
+            .process-grid.cols-4, .process-grid.cols-5 { grid-template-columns: repeat(2, 1fr); }
+            .process-header { flex-direction: column; text-align: center; }
+            .process-header .section-subtitle { margin-inline: auto; }
+            /* Flechas hacia abajo en móvil para caminos */
+            .process-step:not(:last-child)::after {
+                content: '\f063';
+                font-family: 'Font Awesome 6 Free';
+                font-weight: 900;
+                position: absolute;
+                bottom: -18px;
+                right: 50%;
+                top: auto;
+                transform: translateX(50%);
+                color: var(--accent-cyan);
+                font-size: 1.2rem;
+                opacity: 0;
+                z-index: 1;
+                animation: arrowPulseDown 2s infinite;
+            }
+            .process-step.active:not(:last-child)::after { opacity: 0.6; }
+            
+            @keyframes arrowPulseDown {
+                0% { transform: translate(50%, 0); opacity: 0.2; }
+                50% { transform: translate(50%, 50%); opacity: 0.8; }
+                100% { transform: translate(50%, 0); opacity: 0.2; }
+            }
+
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .team-avatar { width: 120px; height: 120px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .why-grid { grid-template-columns: repeat(2, 1fr); }
+        }
 
         @media (max-width: 768px) {
-            :root { --header-height: 70px; }
-            .hero h1 { font-size: 3rem; }
+            :root { --header-height: 64px; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
             .hamburger { display: block; }
             .nav-menu {
                 position: fixed; top: var(--header-height); left: 100%; flex-direction: column;
-                background-color: var(--bg-dark); width: 100%; height: calc(100vh - var(--header-height));
-                padding: 60px 30px; transition: 0.4s; align-items: center; border-top: 1px solid #333;
+                background: rgba(3, 6, 13, 0.97); backdrop-filter: blur(16px); width: 100%;
+                height: calc(100vh - var(--header-height)); padding: 30px 24px; transition: 0.35s ease-in-out;
+                align-items: flex-start; border-top: 1px solid var(--border-color);
             }
             .nav-menu.active { left: 0; }
-            .nav-link { font-size: 1.5rem; }
-            .section-pad { padding: 80px 0; }
-            .vci-grid { grid-template-columns: 1fr; gap: 20px; }
-
-            .services-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .service-card h3 { font-size: 0.9rem; margin: 10px 0; }
-            .service-icon { font-size: 1.8rem; margin-bottom: 5px; }
-            .read-more { font-size: 0.7rem; } 
+            .nav-link { font-size: 1.1rem; width: 100%; padding: 12px 0; border-bottom: 1px solid rgba(255, 255, 255, 0.03); }
+            .nav-cta { margin-left: 0; margin-top: 16px; width: 100%; text-align: center; }
+            .section-pad { padding: 70px 0; }
+            .process-grid.cols-4, .process-grid.cols-5 { grid-template-columns: 1fr; }
+            .process-section { padding: 60px 0; }
             
-            /* Carrusel Móvil */
-            .pricing-grid { display: grid; grid-template-areas: "stack"; justify-content: center; gap: 0; overflow: visible; padding: 20px 0; min-height: 550px; }
-            .plan-card { grid-area: stack; width: 85vw; max-width: 350px; transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.5s ease, z-index 0s linear 0.25s; opacity: 0; pointer-events: none; transform: scale(0.8); }
-            .plan-card.carousel-active { opacity: 1 !important; z-index: 10; transform: translateX(0) scale(1); pointer-events: auto; background: #111; box-shadow: 0 20px 60px rgba(0,0,0,0.9); }
-            .plan-card.carousel-prev { opacity: 0.6; z-index: 5; transform: translateX(-45%) scale(0.85) rotate(-5deg); display: flex; }
-            .plan-card.carousel-next { opacity: 0.6; z-index: 5; transform: translateX(45%) scale(0.85) rotate(5deg); display: flex; }
-            .pricing-controls { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
-            .carousel-btn { background: transparent; border: 2px solid var(--neon-red); color: var(--neon-red); width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+            /* SLIDER GALERÍA MÓVIL PROYECTOS RESPONSIVE */
+            .projects-grid {
+                display: flex;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                padding-bottom: 20px;
+                gap: 16px;
+                scrollbar-width: none;
+                -webkit-overflow-scrolling: touch;
+            }
+            .projects-grid::-webkit-scrollbar { display: none; }
+            .project-card {
+                min-width: 85%;
+                width: 85%;
+                max-width: 350px;
+                scroll-snap-align: center;
+                flex-shrink: 0;
+                display: flex;
+                flex-direction: column;
+            }
+            .swipe-indicator {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                font-size: 0.85rem;
+                color: var(--accent-cyan);
+                margin-bottom: 20px;
+                opacity: 0.8;
+                animation: swipeAnim 2s infinite;
+            }
+            @keyframes swipeAnim {
+                0%, 100% { transform: translateX(0); }
+                50% { transform: translateX(10px); }
+            }
+
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .hero-buttons .btn { width: 100%; }
+            .footer-inner { justify-content: center; text-align: center; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .team-avatar { width: 100px; height: 100px; }
+            .team-card { padding: 24px 12px 20px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+            .stat-item .stat-number { font-size: 1.8rem; }
+            .why-grid { grid-template-columns: 1fr; }
         }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
+
 <body>
+    <div class="grid-bg"></div>
 
     <header>
         <div class="container header-container">
-            <a href="#" class="logo">AGENCIA <span>VCI</span></a>
+            <a href="#" class="logo">&lt;VCI/&gt; <span>agency</span></a>
             <nav>
                 <ul class="nav-menu" id="nav-menu">
                     <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                    <li><a href="#proyectos" class="nav-link">Proyectos</a></li>
+                    <li><a href="#vci" class="nav-link">Método</a></li>
                     <li><a href="#servicios" class="nav-link">Servicios</a></li>
-                    <li><a href="#vci" class="nav-link">Sistema VCI</a></li>
+                    <li><a href="#procesos" class="nav-link">Procesos</a></li>
                     <li><a href="#planes" class="nav-link">Planes</a></li>
-                    <li><a href="#nosotros" class="nav-link">Nosotros</a></li>
+                    <li><a href="#equipo" class="nav-link" data-i18n="nav.equipo">Equipo</a></li>
+                    <li><a href="https://wa.me/51945924959" class="nav-cta" target="_blank"
+                            data-i18n="nav.cta">Contáctanos</a></li>
+                    <li>
+                        <div class="lang-toggle">
+                            <button class="lang-btn active" onclick="setLang('es')">ES</button>
+                            <button class="lang-btn" onclick="setLang('en')">EN</button>
+                        </div>
+                    </li>
                 </ul>
             </nav>
             <div class="hamburger" id="hamburger"><i class="fas fa-bars"></i></div>
@@ -436,204 +998,678 @@
 
     <section id="inicio" class="hero">
         <div class="hero-content reveal">
-            <span class="hero-subtitle">¿TU NEGOCIO NO ESTA EN INTERNET?</span>
-            <h1><span class="highlight-text">MODERNIZA</span> TU NEGOCIO SIN COMPLICACIONES</h1>
-            <p>Deja de competir solo por precio. Implementamos el Sistema VCI (Visibilidad, Control e Innovación) con tecnología accesible.</p>
-            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
-                <a href="#planes" class="btn btn-primary">Ver Planes</a>
-                <a href="#servicios" class="btn btn-accent">Servicios</a>
+            <div class="hero-badge">
+                <span class="pulse-dot"></span> Disponible para proyectos
+            </div>
+            <h1>Construimos soluciones digitales <span class="highlight-text">escalables e innovadoras.</span></h1>
+            <p>Implementamos el Sistema VCI — Visibilidad, Control e Innovación — para que tu negocio compita con
+                tecnología accesible y profesional.</p>
+            <div class="hero-buttons">
+                <a href="#planes" class="btn btn-primary btn-pill">Ver Planes <i class="fas fa-arrow-down"
+                        style="font-size: 0.8rem;"></i></a>
+                <a href="#proyectos" class="btn btn-outline btn-pill">Nuestros Proyectos <i class="fas fa-arrow-right"
+                        style="font-size: 0.7rem;"></i></a>
+            </div>
+            <div class="hero-terminal reveal">
+                <span>$ vci deploy --production</span><span class="cursor"></span>
             </div>
         </div>
+        <a href="#proyectos" class="scroll-down"><i class="fas fa-chevron-down"></i></a>
     </section>
 
-    <section id="vci" class="vci-section section-pad">
+    <section id="proyectos" class="section-pad">
         <div class="container">
-            <h2 class="section-title reveal">El Sistema <span style="color:var(--neon-blue)">VCI</span></h2>
-            <p class="section-subtitle reveal" style="color:var(--neon-yellow)">Los tres pilares de tu transformación</p>
-            <div class="vci-grid">
-                <div class="vci-card reveal">
-                    <h3><i class="fas fa-eye"></i> Visibilidad</h3>
-                    <p>Domina Google Maps, redes sociales y ten una web que vende 24/7.</p>
-                </div>
-                <div class="vci-card reveal">
-                    <h3><i class="fas fa-chart-pie"></i> Control</h3>
-                    <p>Organiza inventario y finanzas. Deja de perder dinero por desorden.</p>
-                </div>
-                <div class="vci-card reveal">
-                    <h3><i class="fas fa-robot"></i> Innovación</h3>
-                    <p>Inteligencia Artificial para marketing y automatización.</p>
-                </div>
+            <div class="section-header reveal">
+                <span class="section-tag">portafolio</span>
+                <h2 class="section-title">Proyectos <span class="highlight-text">Destacados</span></h2>
+                <p class="section-subtitle">Algunos de los proyectos que hemos construido para nuestros clientes.</p>
             </div>
+            
+            <div class="swipe-indicator reveal"><i class="fas fa-arrow-left"></i> Desliza para ver más <i class="fas fa-arrow-right"></i></div>
+            
+            <div class="projects-grid reveal" id="projects-grid"></div>
         </div>
     </section>
 
-    <section id="servicios" class="services section-pad">
+    <section id="vci" class="section-pad">
         <div class="container">
-            <h2 class="section-title reveal">Desglose Técnico</h2>
-            <p class="section-subtitle reveal">Nuestros módulos de implementación</p>
-            <div class="services-grid reveal" id="services-grid"></div>
-        </div>
-    </section>
-
-    <section id="planes" class="pricing section-pad">
-        <div class="container">
-            <h2 class="section-title reveal">Inversión Inteligente</h2>
-            <p class="section-subtitle reveal">Estrategia y Tecnología Aplicada</p>
-            <div class="pricing-grid reveal" id="pricing-grid"></div>
-            <div class="pricing-controls">
-                <button class="carousel-btn" id="prev-btn"><i class="fas fa-chevron-left"></i></button>
-                <button class="carousel-btn" id="next-btn"><i class="fas fa-chevron-right"></i></button>
+            <div class="section-header reveal">
+                <span class="section-tag">sistema</span>
+                <h2 class="section-title">El Método <span class="highlight-text">VCI</span></h2>
+                <p class="section-subtitle">Tres pilares que transforman negocios tradicionales en negocios digitales
+                    rentables.</p>
             </div>
-        </div>
-    </section>
-
-    <section id="nosotros" class="about section-pad">
-        <div class="container about-content reveal">
-            <div class="about-text">
-                <h2 class="section-title">Sobre el Fundador</h2>
-                <h3 style="color: var(--neon-red); margin-bottom: 20px; font-size: 1.5rem;">Josué Becerra <span style="font-size: 0.8em; color: var(--text-muted); font-weight: 400;">| Ing. de Sistemas UPC</span></h3>
-                <p style="margin-bottom: 20px; color: var(--text-muted);">
-                    Mi misión es revolucionar el barrio. Transformo dueños de negocios tradicionales en emprendedores modernos utilizando herramientas tecnológicas de alto impacto.
-                </p>
-                <div class="center-image-container">
-                    <img id="profile-photo" src="" alt="Josué Becerra" class="profile-img"> 
+            <div class="vci-grid stagger">
+                <div class="vci-card reveal-left-slow">
+                    <div class="card-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Visibilidad</h3>
+                    <p>Domina tu presencia digital en buscadores, redes sociales y obtén una web moderna que proyecte
+                        profesionalismo y venda 24/7.</p>
                 </div>
-                <p style="margin-bottom: 30px; color: var(--text-main); font-weight: 500; border-left: 3px solid var(--neon-blue); padding-left: 15px;">
-                    <span style="color:var(--neon-yellow)">"En la era digital, la adaptación no es opcional, es clave para la supervivencia. Destacar es mi principio, y haré que tu negocio también lo haga."</span>
-                </p>
-                <a href="https://wa.me/51989435125?text=Hola%20Josué,%20quiero%20conocer%20más%20sobre%20Agencia%20VCI" target="_blank" class="btn btn-primary">Contactar Directamente</a>
+                <div class="vci-card reveal-left-slow">
+                    <div class="card-icon"><i class="fas fa-chart-pie"></i></div>
+                    <h3>Control</h3>
+                    <p>Organiza tu inventario y finanzas empresariales. Implementamos sistemas a medida para que dejes
+                        de perder dinero por desorden.</p>
+                </div>
+                <div class="vci-card reveal-left-slow">
+                    <div class="card-icon"><i class="fas fa-robot"></i></div>
+                    <h3>Innovación</h3>
+                    <p>Integramos herramientas de Inteligencia Artificial para potenciar el marketing y automatizar
+                        tareas repetitivas de forma eficiente.</p>
+                </div>
             </div>
         </div>
     </section>
+
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stats-grid reveal stagger">
+                <div class="stat-item"><span class="stat-number" data-count="15">0</span><span class="stat-label"
+                        data-i18n="stats.projects">Proyectos Entregados</span></div>
+                <div class="stat-item"><span class="stat-number">24h</span><span class="stat-label"
+                        data-i18n="stats.delivery">Tiempo de Entrega</span></div>
+                <div class="stat-item"><span class="stat-number" data-count="100">0</span><span class="stat-label"
+                        data-i18n="stats.satisfaction">Clientes Satisfechos</span></div>
+                <div class="stat-item"><span class="stat-number">4</span><span class="stat-label"
+                        data-i18n="stats.engineers">Ingenieros en el Equipo</span></div>
+            </div>
+        </div>
+    </div>
+
+    <section id="servicios" class="section-pad" style="background: rgba(6, 11, 24, 0.6);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">servicios</span>
+                <h2 class="section-title">Soluciones Para <span class="highlight-text">Tu Negocio</span></h2>
+                <p class="section-subtitle">Todo lo que necesitas para llevar tu emprendimiento al siguiente nivel.</p>
+            </div>
+            <div class="bento-grid reveal" id="services-grid"></div>
+        </div>
+    </section>
+
+    <section class="section-pad">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag" data-i18n="why.tag">diferenciadores</span>
+                <h2 class="section-title" data-i18n="why.title">¿Por Qué <span class="highlight-text">Elegirnos</span>?
+                </h2>
+            </div>
+            <div class="why-grid stagger">
+                <div class="why-card reveal-zoom">
+                    <span class="why-icon">🚀</span>
+                    <h4 data-i18n="why.fast">Resultados en 24h</h4>
+                    <p data-i18n="why.fast_desc">Tu web lista en menos de un día. Sin esperas eternas ni excusas.</p>
+                </div>
+                <div class="why-card reveal-zoom">
+                    <span class="why-icon">💰</span>
+                    <h4 data-i18n="why.transparent">Sin Letras Chicas</h4>
+                    <p data-i18n="why.transparent_desc">Precios claros desde el inicio. Pagas lo que ves, sin costos
+                        ocultos.</p>
+                </div>
+                <div class="why-card reveal-zoom">
+                    <span class="why-icon">🤝</span>
+                    <h4 data-i18n="why.support">Soporte Humano Real</h4>
+                    <p data-i18n="why.support_desc">Hablamos contigo directo por WhatsApp. Nada de chatbots ni tickets.
+                    </p>
+                </div>
+                <div class="why-card reveal-zoom">
+                    <span class="why-icon">🔒</span>
+                    <h4 data-i18n="why.ownership">Tu Proyecto Es Tuyo</h4>
+                    <p data-i18n="why.ownership_desc">Te entregamos todos los archivos y accesos. Sin candados ni
+                        dependencia.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="procesos" class="process-section">
+        <div class="container">
+            <div class="process-header reveal">
+                <div>
+                    <span class="section-tag">proceso</span>
+                    <h2 class="section-title">Cómo Creamos <span class="highlight-text">Tu Página Web</span></h2>
+                </div>
+                <p class="section-subtitle">Activa en menos de 24 horas. Sin complicaciones, nosotros nos encargamos de
+                    todo.</p>
+            </div>
+            <div class="process-grid cols-4 stagger-slow">
+                <div class="process-step reveal">
+                    <span class="step-number">1</span>
+                    <i class="fas fa-search step-icon"></i>
+                    <h4>Entendemos tu negocio</h4>
+                    <p>Investigamos tu día a día con tus clientes para que la web resuelva tus problemas reales.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">2</span>
+                    <i class="fas fa-palette step-icon"></i>
+                    <h4>Diseño a tu medida</h4>
+                    <p>Te presentamos propuestas con plantillas probadas, separando tus productos para facilitar la
+                        decisión de tus clientes.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">3</span>
+                    <i class="fas fa-rocket step-icon"></i>
+                    <h4>Construcción express</h4>
+                    <p>Nuestro equipo entrega tu web lista en menos de 24 horas. Implementación total.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">4</span>
+                    <i class="fas fa-shield-halved step-icon"></i>
+                    <h4>Acompañamiento</h4>
+                    <p>Nos encargamos del mantenimiento mensual y de hacer futuras mejoras a tu página.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="process-section" style="background: rgba(6, 11, 24, 0.6);">
+        <div class="container">
+            <div class="process-header reveal">
+                <div>
+                    <span class="section-tag">configuración</span>
+                    <h2 class="section-title">Tu Negocio en <span class="highlight-text">Google Maps & WhatsApp</span>
+                    </h2>
+                </div>
+                <p class="section-subtitle">Configuramos todo para que cuando alguien busque lo que ofreces, te
+                    encuentre primero.</p>
+            </div>
+            <div class="process-grid cols-5 stagger-slow">
+                <div class="process-step reveal">
+                    <span class="step-number">1</span>
+                    <i class="fas fa-map-location-dot step-icon"></i>
+                    <h4>Tu negocio en el mapa</h4>
+                    <p>Creamos tu perfil de Google Maps desde cero.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">2</span>
+                    <i class="fas fa-star step-icon"></i>
+                    <h4>Agregamos reseñas</h4>
+                    <p>Que tus vecinos sientan que tu negocio es el ideal.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">3</span>
+                    <i class="fab fa-whatsapp step-icon" style="color: var(--wsp-color);"></i>
+                    <h4>WhatsApp empresa</h4>
+                    <p>Configuramos tu WhatsApp Business profesional.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">4</span>
+                    <i class="fas fa-bolt step-icon"></i>
+                    <h4>Respuestas rápidas</h4>
+                    <p>Respuestas automáticas para preguntas frecuentes.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">5</span>
+                    <i class="fas fa-graduation-cap step-icon"></i>
+                    <h4>Entrenamiento</h4>
+                    <p>Te enseñamos a usar estas herramientas en tu día a día.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="process-section">
+        <div class="container">
+            <div class="process-header reveal">
+                <div>
+                    <span class="section-tag">contenido</span>
+                    <h2 class="section-title">Crecimiento Viral en <span class="highlight-text">Redes Sociales</span>
+                    </h2>
+                </div>
+                <p class="section-subtitle">Videos y fotos profesionales para que tu negocio se vuelva viral y atraiga
+                    clientes.</p>
+            </div>
+            <div class="process-grid cols-5 stagger-slow">
+                <div class="process-step reveal">
+                    <span class="step-number">1</span>
+                    <i class="fas fa-fire step-icon"></i>
+                    <h4>Cazamos tendencias</h4>
+                    <p>Investigamos qué está de moda para adaptar los videos virales a tu negocio.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">2</span>
+                    <i class="fas fa-bullseye step-icon"></i>
+                    <h4>Planificamos</h4>
+                    <p>Armamos una estrategia de contenido clara con la cantidad que necesitas.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">3</span>
+                    <i class="fas fa-clapperboard step-icon"></i>
+                    <h4>Grabación</h4>
+                    <p>Venimos a tu local y grabamos todo para mostrar la mejor cara de tu negocio.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">4</span>
+                    <i class="fas fa-wand-magic-sparkles step-icon"></i>
+                    <h4>Edición pro</h4>
+                    <p>Editamos el material con estilo dinámico para captar la atención de inmediato.</p>
+                </div>
+                <div class="process-step reveal">
+                    <span class="step-number">5</span>
+                    <i class="fas fa-share-nodes step-icon"></i>
+                    <h4>Publicación</h4>
+                    <p>Subimos el contenido a tus redes para generar visitas y ventas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="planes" class="section-pad" style="background: rgba(6, 11, 24, 0.6);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">precios</span>
+                <h2 class="section-title">Precios Para <span class="highlight-text">los Primeros 10 Clientes</span></h2>
+                <p class="section-subtitle">Elige el nivel que mejor se adapte a tu negocio. Sin letras pequeñas, sin
+                    sorpresas.</p>
+            </div>
+            <div class="reveal" id="pricing-container"></div>
+            <div class="pricing-cta reveal">
+                <a href="https://wa.me/51945924959?text=Hola,%20quiero%20conocer%20más%20sobre%20los%20precios"
+                    target="_blank" class="btn btn-primary btn-pill"><i class="fab fa-whatsapp"
+                        style="font-size: 1.1rem;"></i> Consultar precios</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="equipo" class="section-pad" style="background: rgba(6, 11, 24, 0.6);">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-tag">equipo</span>
+                <h2 class="section-title">Conoce al <span class="highlight-text">Equipo</span></h2>
+                <p class="section-subtitle">Las personas detrás de cada proyecto.</p>
+            </div>
+            <div class="team-grid stagger" id="team-grid"></div>
+            <div style="text-align: center; margin-top: 40px;" class="reveal">
+                <a href="https://wa.me/51945924959?text=Hola,%20quiero%20conocer%20más%20sobre%20Agencia%20VCI"
+                    target="_blank" class="btn btn-outline btn-pill">
+                    <i class="fab fa-whatsapp"></i> Hablar con la Agencia
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="urgency-banner">
+        <div class="container">
+            <div class="urgency-inner">
+                <span class="urgency-text" data-i18n="urgency.text">🔥 Quedan <span>7 de 10</span> cupos a precio de
+                    lanzamiento</span>
+                <a href="https://wa.me/51945924959?text=Hola,%20quiero%20agendar%20una%20reunión" target="_blank"
+                    class="btn btn-primary btn-pill" data-i18n="urgency.cta">Agendar reunión</a>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <div class="container">
-            <div class="social-links">
-                <a href="https://wa.me/51989435125" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://www.tiktok.com/@josue.techydata" target="_blank" class="social-link"><i class="fab fa-tiktok"></i></a>
+            <div class="footer-inner">
+                <span class="footer-logo">&lt;VCI/&gt;</span>
+                <div class="social-links">
+                    <a href="https://wa.me/51945924959" target="_blank" class="social-link"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.tiktok.com/@josue.techydata" target="_blank" class="social-link"><i
+                            class="fab fa-tiktok"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
             </div>
-            <p class="footer-text">&copy; 2024 Agencia VCI. Lima, Perú.</p>
+            <p class="footer-text">&copy; 2025 Agencia VCI. Todos los derechos reservados.</p>
         </div>
     </footer>
 
-    <a href="https://wa.me/51989435125?text=Hola,%20vi%20su%20web" class="wsp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://wa.me/51945924959?text=Hola,%20vi%20su%20web" class="wsp-float" target="_blank"><i
+            class="fab fa-whatsapp"></i></a>
 
     <script>
         function fixUrl(u) {
-            if(!u) return 'https://via.placeholder.com/300';
-            if(u.includes('drive')) return `https://wsrv.nl/?url=${encodeURIComponent('https://drive.google.com/uc?export=view&id='+u.split('/d/')[1].split('/')[0])}`;
+            if (!u) return 'https://placehold.co/600x400/0a0f1e/00e5ff?text=Proyecto';
+            if (u.includes('drive')) return `https://wsrv.nl/?url=${encodeURIComponent('https://drive.google.com/uc?export=view&id=' + u.split('/d/')[1].split('/')[0])}`;
+            if (u.includes('ui-avatars')) return u; 
             return `https://wsrv.nl/?url=${encodeURIComponent(u)}`;
         }
 
         const servicesData = [
-            { id: 1, icon: "fa-mobile-screen-button", title: "Apps de Gestión", desc: "Software a medida.", details: "Aplicaciones para PC o Web conectadas a bases de datos para controlar tu negocio." },
-            { id: 2, icon: "fa-database", title: "Bases de Datos", desc: "Orden total.", details: "Implementación de sistemas en Excel/Sheets o SQL para inventarios y ventas." },
-            { id: 3, icon: "fa-envelope-open-text", title: "Integración Gmail", desc: "Automatización.", details: "Correos automáticos para clientes, facturación y seguimiento." },
-            { id: 4, icon: "fa-laptop-code", title: "Web & Catálogos", desc: "Tu tienda online.", details: "Páginas web modernas y catálogos digitales interactivos." },
-            { id: 5, icon: "fa-robot", title: "IA Aplicada", desc: "Eficiencia.", details: "Uso de Inteligencia Artificial para crear contenido y optimizar procesos." },
-            { id: 6, icon: "fa-map-location-dot", title: "Google Maps", desc: "Visibilidad.", details: "Posicionamiento local para que te encuentren tus vecinos." },
-            { id: 7, icon: "fa-whatsapp", title: "WhatsApp API", desc: "Ventas rápidas.", details: "Configuración profesional, catálogos y respuestas rápidas." },
-            { id: 8, icon: "fa-chart-line", title: "Mejora Continua", desc: "Crecimiento.", details: "Análisis de datos para tomar decisiones y vender más." },
-            { id: 9, icon: "fa-lightbulb", title: "Asesoría Tendencias", desc: "Consultoría.", details: "Guía experta sobre nuevas tendencias digitales y oportunidades de negocio." }
+            { icon: "fa-laptop-code", title: "Páginas Web & Catálogos", desc: "Tu vitrina digital moderna para que tus clientes vean todo lo que ofreces, con diseño impactante y funcional.", tag: "web" },
+            { icon: "fa-mobile-screen-button", title: "Apps de Gestión", desc: "Un sistema hecho a tu medida para manejar tu negocio desde cualquier dispositivo.", tag: "software" },
+            { icon: "fa-database", title: "Bases de Datos", desc: "Organiza inventario, clientes y finanzas en un solo lugar sin complicaciones.", tag: "data" },
+            { icon: "fa-envelope-open-text", title: "Automatización", desc: "Que las tareas repetitivas se hagan solas: facturas, mensajes y reportes.", tag: "automation" },
+            { icon: "fa-robot", title: "IA Para Tu Negocio", desc: "Herramientas inteligentes que te ayudan a vender más y trabajar menos.", tag: "ai" },
+            { icon: "fa-map-location-dot", title: "Google Maps & WhatsApp", desc: "Que tus vecinos te encuentren fácilmente y te contacten al instante.", tag: "local" }
         ];
 
-        // --- PLANES ACTUALIZADOS (Estrategia: Presencia -> Control -> Sistemas) ---
-        const plansData = [
+        const pricingRows = [
             {
-                title: "Básico", subtitle: "Presencia Digital", price: "350", priceNote: "/ único",
-                styleClass: "plan-yellow", 
-                features: [ 
-                    { txt: "Landing Page Informativa", check: true }, 
-                    { txt: "Google Maps & WhatsApp Config", check: true }, 
-                    { txt: "Soporte Técnico", check: true },
-                    { txt: "🎁 1 Mantenimiento Mensual", check: true, isGift: true }
-                ],
-                cta: "Empezar Básico", wspMsg: "Interesado en Plan Básico"
+                service: "Desarrollo Web",
+                basico: { price: "S/ 260", detail: "Web con 3 productos/servicios\nMantenimiento: S/ 26/mes" },
+                medio: { price: "S/ 365", detail: "Catálogo tipo restaurante\nMantenimiento: S/ 36.50/mes" },
+                avanzado: { price: "S/ 500", detail: "Catálogo autoadministrable\nMantenimiento: S/ 50/mes" }
             },
             {
-                title: "Estándar", subtitle: "Control & Ventas", price: "500", priceNote: "/ único", badge: "Más Vendido",
-                styleClass: "plan-red",
-                features: [ 
-                    { txt: "Web con Catálogo Interactivo", check: true }, 
-                    { txt: "Sistema de Inventario (Sheets)", check: true }, 
-                    { txt: "QR Físico & Config. WhatsApp", check: true }, 
-                    { txt: "🎁 1 Mantenimiento + 1 Plan Contenido", check: true, isGift: true }
-                ],
-                cta: "Quiero el Estándar", wspMsg: "Interesado en Plan Estándar"
+                service: "Creación de Contenido",
+                basico: { price: "S/ 200", detail: "3 videos y 1 post" },
+                medio: { price: "S/ 290", detail: "5 videos y 2 posts" },
+                avanzado: { price: "S/ 370", detail: "7 videos y 3 posts" }
             },
             {
-                title: "Avanzado", subtitle: "Sistemas & Apps", price: "950", priceNote: "/ único",
-                styleClass: "plan-blue", 
-                features: [ 
-                    { txt: "Tu Negocio con Software a Medida", check: true }, 
-                    { txt: "Web + App de Escritorio + BD", check: true }, 
-                    { txt: "Integración Gmail & Dashboard", check: true }, 
-                    { txt: "Integración WhatsApp Avanzada", check: true },
-                    { txt: "🎁 Mantenimiento + Contenido + Marca", check: true, isGift: true }
-                ],
-                cta: "Consultar Avanzado", wspMsg: "Interesado en Plan Avanzado"
+                service: "Config. Maps y WSP",
+                basico: { price: "S/ 80", detail: "Tarifa única o S/ 40 c/u" },
+                medio: { price: "S/ 80", detail: "Tarifa única o S/ 40 c/u" },
+                avanzado: { price: "S/ 80", detail: "Tarifa única o S/ 40 c/u\n+ S/ 30 mejora de perfil" }
+            },
+            {
+                service: "🎁 Paquete Completo",
+                basico: { price: "S/ 540", detail: "" },
+                medio: { price: "S/ 730", detail: "" },
+                avanzado: { price: "S/ 920", detail: "" },
+                isPack: true
             }
         ];
 
-        let currentPlanIndex = 1;
+        const projectsData = [
+            {
+                title: "Rollitos Heladería",
+                desc: "Web con catálogo interactivo y pedidos online.",
+                image: "https://drive.google.com/file/d/1QS-naoMc4evnBRqKaAD3DNgy3TSjl_h8/view?usp=drive_link", 
+                tags: ["Web", "Catálogo"],
+                url: "https://enchanting-centaur-ffa8b7.netlify.app/"
+            },
+            {
+                title: "FioreDiAle Florería",
+                desc: "E-commerce para florería.",
+                image: "https://drive.google.com/file/d/1d4qVwbwO4WPOmLjIcGZzgEYvaYsrdfdV/view?usp=drive_link",
+                tags: ["Web", "E-commerce"],
+                url: "https://fiorediale.online/"
+            },
+            {
+                title: "Delifresas",
+                desc: "Landing page para negocio de postres.",
+                image: "https://drive.google.com/file/d/18UVv6-oCbT9VZ7kGc0uHOzFRZ7qfFYAT/view?usp=drive_link",
+                tags: ["Web", "Landing"],
+                url: "https://delifresas.site/"
+            },
+            {
+                title: "Bambino Pizzeria",
+                desc: "Web con menú digital.",
+                image: "https://drive.google.com/file/d/1sEc7Y7neW73P05SPIPWq9cK12hIxgg03/view?usp=drive_link",
+                tags: ["Web", "Menú"],
+                url: "https://aesthetic-salmiakki-b576b4.netlify.app/"
+            },
+            {
+                title: "Big Patas Restobar",
+                desc: "Página moderna para restobar local.",
+                image: "https://drive.google.com/file/d/1FEdu7nnHu-_ymsiXAtp819Rrgzt7_-Lj/view?usp=drive_link",
+                tags: ["Web", "Restaurante"],
+                url: "https://whimsical-haupia-52373d.netlify.app/"
+            },
+            {
+                title: "Melchorita Anticuchería",
+                desc: "Página web moderna con menú digital integrado.",
+                image: "https://drive.google.com/file/d/1fWRJRWifqbL90ckCryrEhAY_SXROrOM8/view?usp=drive_link",
+                tags: ["Web", "Restaurante"],
+                url: "https://ghost1136.github.io/AnticucheriaMelchorita/"
+            },
+            {
+                title: "King Kong Hamburguesería",
+                desc: "Plataforma web para hamburguesería.",
+                image: "https://drive.google.com/file/d/1CPPliYb6Vu3DFr6qjqQ8QEJnleRBrWRt/view?usp=drive_link",
+                tags: ["Web", "Fast Food"],
+                url: "https://extraordinary-starlight-9ae8a3.netlify.app/"
+            },
+            {
+                title: "Cover 97 Barbería",
+                desc: "Sitio web para barbería moderna.",
+                image: "https://drive.google.com/file/d/1XM0XZlCvYwva07v6eiv166AG3ow2BPP3/view?usp=drive_link",
+                tags: ["Web", "Barbería"],
+                url: "https://leafy-narwhal-cb48ed.netlify.app/"
+            }
+        ];
 
-        function updateCarousel() {
-            const cards = document.querySelectorAll('.plan-card');
-            cards.forEach((card, index) => {
-                card.classList.remove('carousel-active', 'carousel-prev', 'carousel-next');
-                if (index === currentPlanIndex) card.classList.add('carousel-active');
-                else if (index === getPrevIndex()) card.classList.add('carousel-prev');
-                else if (index === getNextIndex()) card.classList.add('carousel-next');
-            });
+        const teamData = [
+            {
+                name: "Josué Becerra",
+                role: "Fundador | Ing. Sistemas",
+                desc: "Lidera la visión de VCI transformando negocios tradicionales. Desde Ancón, Lima.",
+                img: "https://drive.google.com/file/d/1HPmnQQkK61-v9dmg_7jfEUUo2vVsqwug/view?usp=sharing"
+            },
+            {
+                name: "Daniel Tasayco",
+                role: "Desarrollador FullStack | Ing. Sistemas",
+                desc: "Construye aplicaciones completas de principio a fin. Desde Chincha, Ica.",
+                img: "https://drive.google.com/file/d/1N0_W4hJo7XIp-Y8xWa5SpbPhn1e3-RKg/view?usp=sharing"
+            },
+            {
+                name: "Valeria Pilco",
+                role: "Desarrolladora | QA | Ing. Sistemas",
+                desc: "Garantiza la calidad de cada proyecto con pruebas rigurosas y código confiable. Desde Victor Larco Herrera, Trujillo.",
+                img: "https://drive.google.com/file/d/1Bppv-fbUru_qwRml3cJhoT30FbSvO3yw/view?usp=sharing"
+            },
+            {
+                name: "Piero Mori",
+                role: "Scrum Master | QA | Ing. Sistemas",
+                desc: "Coordina al equipo asegurando entregas a tiempo. Desde Maynas, Iquitos.",
+                img: "https://drive.google.com/file/d/1UC9L-5HGrlXJdwp1_f6YYWRE2a7CnVQI/view?usp=sharing"
+            },
+            {
+                name: "Belinda",
+                role: "Estudiante de Ing. Industrial",
+                desc: "Optimización de procesos y operaciones empresariales. Desde Ventanilla, Lima.",
+                img: "https://ui-avatars.com/api/?name=Belinda&background=0a0f1e&color=00e5ff"
+            },
+            {
+                name: "Adrian",
+                role: "Estudiante de Ing. de Sistemas",
+                desc: "Desarrollo y creación de nuevas soluciones tecnológicas. Desde Cajamarca.",
+                img: "https://ui-avatars.com/api/?name=Adrian&background=0a0f1e&color=00e5ff"
+            },
+            {
+                name: "Eddinson",
+                role: "Estudiante de Ing. de Software",
+                desc: "Arquitectura de software y desarrollo de interfaces. Desde Huaral, Lima.",
+                img: "https://drive.google.com/file/d/1DMS0LqY58s-SXIHrkO7KS6SEpMm-o73m/view?usp=drive_link"
+            }
+        ];
+
+        const dict = {
+            "Inicio": "Home", "Método": "Method", "Servicios": "Services", "Procesos": "Process",
+            "Planes": "Plans", "Proyectos": "Projects", "Equipo": "Team", "Contáctanos": "Contact Us",
+            "Disponible para proyectos": "Available for projects",
+            "Construimos soluciones digitales": "We build digital solutions",
+            "escalables e innovadoras.": "that are scalable and innovative.",
+            "Implementamos el Sistema VCI — Visibilidad, Control e Innovación — para que tu negocio compita con tecnología accesible y profesional.": "We implement the VCI System — Visibility, Control & Innovation — so your business can compete with accessible, professional technology.",
+            "Ver Planes ↓": "See Plans ↓", "Nuestros Proyectos →": "Our Projects →",
+            "$ vci deploy --production": "$ vci deploy --production",
+            "sistema": "system", "El Método": "The Method",
+            "Tres pilares que transforman negocios tradicionales en negocios digitales rentables.": "Three pillars that transform traditional businesses into profitable digital ones.",
+            "Visibilidad": "Visibility",
+            "Domina tu presencia digital en buscadores, redes sociales y obtén una web moderna que proyecte profesionalismo y venda 24/7.": "Dominate your digital presence on search engines, social media and get a modern website that projects professionalism and sells 24/7.",
+            "Control": "Control",
+            "Organiza tu inventario y finanzas empresariales. Implementamos sistemas a medida para que dejes de perder dinero por desorden.": "Organize your inventory and business finances. We implement custom systems so you stop losing money to disorganization.",
+            "Innovación": "Innovation",
+            "Integramos herramientas de Inteligencia Artificial para potenciar el marketing y automatizar tareas repetitivas de forma eficiente.": "We integrate AI tools to boost marketing and automate repetitive tasks efficiently.",
+            "Proyectos Entregados": "Projects Delivered", "Tiempo de Entrega": "Delivery Time",
+            "Clientes Satisfechos": "Satisfied Clients", "Ingenieros en el Equipo": "Engineers on Team",
+            "servicios": "services", "Soluciones Para": "Solutions For", "Tu Negocio": "Your Business",
+            "Todo lo que necesitas para llevar tu emprendimiento al siguiente nivel.": "Everything you need to take your business to the next level.",
+            "diferenciadores": "differentiators", "¿Por Qué": "Why", "Elegirnos": "Choose Us",
+            "Resultados en 24h": "Results in 24h", "Tu web lista en menos de un día. Sin esperas eternas ni excusas.": "Your website ready in less than a day. No endless waits or excuses.",
+            "Sin Letras Chicas": "No Fine Print", "Precios claros desde el inicio. Pagas lo que ves, sin costos ocultos.": "Clear pricing from the start. You pay what you see, no hidden costs.",
+            "Soporte Humano Real": "Real Human Support", "Hablamos contigo directo por WhatsApp. Nada de chatbots ni tickets.": "We talk to you directly via WhatsApp. No chatbots or tickets.",
+            "Tu Proyecto Es Tuyo": "Your Project Is Yours", "Te entregamos todos los archivos y accesos. Sin candados ni dependencia.": "We deliver all files and access. No locks or dependency.",
+            "proceso": "process", "Cómo Creamos": "How We Create", "Tu Página Web": "Your Website",
+            "Activa en menos de 24 horas. Sin complicaciones, nosotros nos encargamos de todo.": "Active in less than 24 hours. No hassle, we take care of everything.",
+            "Entendemos tu negocio": "We understand your business", "Diseño a tu medida": "Custom design",
+            "Construcción express": "Express build", "Acompañamiento": "Support",
+            "precios": "pricing", "Precios Para": "Pricing For", "los Primeros 10 Clientes": "the First 10 Clients",
+            "Elige el nivel que mejor se adapte a tu negocio. Sin letras pequeñas, sin sorpresas.": "Choose the level that best fits your business. No fine print, no surprises.",
+            "Consultar precios": "Check pricing",
+            "portafolio": "portfolio", "Destacados": "Projects",
+            "Algunos de los proyectos que hemos construido para nuestros clientes.": "Some of the projects we've built for our clients.",
+            "Ver Proyecto": "View Project",
+            "equipo": "team", "Conoce al": "Meet the",
+            "Las personas detrás de cada proyecto.": "The people behind every project.",
+            "Hablar con la Agencia": "Talk to the Agency",
+            "Agendar reunión": "Schedule a meeting",
+            "© 2025 Agencia VCI. Todos los derechos reservados.": "© 2025 VCI Agency. All rights reserved.",
+            "integración": "integration", "contenido": "content",
+            "Google Maps & WhatsApp Para": "Google Maps & WhatsApp For",
+            "Tu Negocio Local": "Your Local Business",
+            "Crecimiento Viral en": "Viral Growth on", "Redes Sociales": "Social Media",
+        };
+
+        const reverseDict = {};
+        for (const [es, en] of Object.entries(dict)) reverseDict[en] = es;
+
+        let currentLang = localStorage.getItem('vci-lang') || 'es';
+        const originalTexts = new Map();
+
+        function translateNode(node, toDict) {
+            if (node.nodeType === Node.TEXT_NODE) {
+                const text = node.textContent.trim();
+                if (!text) return;
+                if (!originalTexts.has(node)) originalTexts.set(node, node.textContent);
+                for (const [from, to] of Object.entries(toDict)) {
+                    if (node.textContent.includes(from)) {
+                        node.textContent = node.textContent.replace(from, to);
+                    }
+                }
+            } else if (node.nodeType === Node.ELEMENT_NODE) {
+                if (['SCRIPT', 'STYLE'].includes(node.tagName)) return;
+                if (node.classList && node.classList.contains('lang-btn')) return;
+                node.childNodes.forEach(child => translateNode(child, toDict));
+            }
         }
-        function getPrevIndex() { return (currentPlanIndex - 1 + plansData.length) % plansData.length; }
-        function getNextIndex() { return (currentPlanIndex + 1) % plansData.length; }
+
+        function setLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('vci-lang', lang);
+            document.querySelectorAll('.lang-btn').forEach(b => {
+                b.classList.toggle('active', b.textContent.trim() === lang.toUpperCase());
+            });
+            if (lang === 'en') {
+                translateNode(document.body, dict);
+            } else {
+                originalTexts.forEach((original, node) => { node.textContent = original; });
+                originalTexts.clear();
+            }
+            document.documentElement.lang = lang;
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Render services con estructura para Flip 3D
             document.getElementById('services-grid').innerHTML = servicesData.map(s => `
-                <div class="service-card">
-                    <div class="service-inner">
-                        <div class="service-front">
+                <div class="service-card reveal-zoom" onclick="this.classList.toggle('flipped')">
+                    <div class="service-card-inner">
+                        <div class="service-card-front">
                             <i class="fas ${s.icon} service-icon"></i>
                             <h3>${s.title}</h3>
-                            <span class="read-more">Ver detalles</span>
+                            <span class="service-tag">&lt;${s.tag}/&gt;</span>
                         </div>
-                        <div class="service-back">
-                            <h3>${s.title}</h3>
-                            <p class="service-desc">${s.details}</p>
+                        <div class="service-card-back">
+                            <p class="service-desc">${s.desc}</p>
                         </div>
                     </div>
                 </div>
             `).join('');
 
-            document.getElementById('pricing-grid').innerHTML = plansData.map((p, i) => `
-                <div class="plan-card ${p.styleClass} ${p.badge ? 'standard' : ''}" data-index="${i}">
-                    ${p.badge ? `<span class="plan-badge">${p.badge}</span>` : ''}
-                    <div class="plan-header">
+            // Render pricing table
+            const pc = document.getElementById('pricing-container');
+            if (pc) {
+                pc.innerHTML = `
+                    <div class="pricing-table-wrapper">
+                        <table class="pricing-table">
+                            <thead>
+                                <tr>
+                                    <th>Servicio</th>
+                                    <th>Nivel Básico</th>
+                                    <th class="th-highlight">Nivel Medio <span class="th-badge">POPULAR</span></th>
+                                    <th>Nivel Avanzado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${pricingRows.map(row => `
+                                    <tr>
+                                        <td>${row.service}</td>
+                                        <td>
+                                            <span class="${row.isPack ? 'pack-price' : 'price-main'}">${row.basico.price}</span>
+                                            ${row.basico.detail ? `<span class="price-detail">${row.basico.detail.replace(/\n/g, '<br>')}</span>` : ''}
+                                        </td>
+                                        <td>
+                                            <span class="${row.isPack ? 'pack-price' : 'price-main'}">${row.medio.price}</span>
+                                            ${row.medio.detail ? `<span class="price-detail">${row.medio.detail.replace(/\n/g, '<br>')}</span>` : ''}
+                                        </td>
+                                        <td>
+                                            <span class="${row.isPack ? 'pack-price' : 'price-main'}">${row.avanzado.price}</span>
+                                            ${row.avanzado.detail ? `<span class="price-detail">${row.avanzado.detail.replace(/\n/g, '<br>')}</span>` : ''}
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Render projects
+            document.getElementById('projects-grid').innerHTML = projectsData.map(p => `
+                <a href="${p.url}" target="_blank" class="project-card">
+                    <div class="project-img">
+                        <img src="${fixUrl(p.image)}" alt="${p.title}">
+                        <div class="project-overlay">
+                            <span class="btn btn-primary btn-pill">Ver Proyecto <i class="fas fa-external-link-alt" style="font-size: 0.65rem;"></i></span>
+                        </div>
+                    </div>
+                    <div class="project-body">
                         <h3>${p.title}</h3>
-                        <p style="font-weight:500; opacity:0.8">${p.subtitle}</p>
-                        <div class="plan-price">S/ ${p.price} <span>${p.priceNote}</span></div>
+                        <p>${p.desc}</p>
+                        <div class="project-tags">
+                            ${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
+                        </div>
                     </div>
-                    <ul class="plan-features">
-                        ${p.features.map(f => `
-                            <li>
-                                <i class="fas ${f.isGift ? 'fa-gift gift-icon' : 'fa-check-circle check'}"></i> 
-                                <span class="${f.isGift ? 'bonus-text' : ''}">${f.txt}</span>
-                            </li>`).join('')}
-                    </ul>
-                    <a href="https://wa.me/51989435125?text=${encodeURIComponent(p.wspMsg)}" target="_blank" class="btn" style="text-align:center; width:100%">${p.cta}</a>
+                </a>
+            `).join('');
+
+            // Render team
+            document.getElementById('team-grid').innerHTML = teamData.map((m, i) => `
+                <div class="team-card reveal-zoom" style="transition-delay: ${i * 0.15}s">
+                    <div class="team-avatar">
+                        <img src="${fixUrl(m.img)}" alt="${m.name}">
+                    </div>
+                    <div class="team-info">
+                        <h3>${m.name}</h3>
+                        <p class="role">${m.role}</p>
+                        <p class="team-desc">${m.desc}</p>
+                    </div>
                 </div>
             `).join('');
 
-            const img = document.getElementById('profile-photo');
-            if(img) img.src = fixUrl("https://drive.google.com/file/d/1HPmnQQkK61-v9dmg_7jfEUUo2vVsqwug/view?usp=sharing");
+            // Counter animation
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.querySelectorAll('[data-count]').forEach(el => {
+                            const target = parseInt(el.dataset.count);
+                            const suffix = target > 15 ? '%' : '+';
+                            let current = 0;
+                            const step = Math.ceil(target / 40);
+                            const timer = setInterval(() => {
+                                current += step;
+                                if (current >= target) { current = target; clearInterval(timer); }
+                                el.textContent = current + suffix;
+                            }, 30);
+                        });
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.3 });
+            document.querySelectorAll('.stats-grid').forEach(el => counterObserver.observe(el));
 
-            updateCarousel();
+            if (currentLang === 'en') setLang('en');
+
             setupInteractivity();
             setupScrollReveal();
         });
 
         function setupScrollReveal() {
+            // Animación que entra y sale en el viewport, incluyendo la nueva clase lenta
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -642,22 +1678,34 @@
                         entry.target.classList.remove('active');
                     }
                 });
-            }, { threshold: 0.15 });
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+            }, { 
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+            
+            document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-zoom, .reveal-left-slow').forEach(el => observer.observe(el));
+
+            setTimeout(() => {
+                document.querySelectorAll('.hero-content, .hero-content > *').forEach(el => el.classList.add('active'));
+            }, 100);
         }
 
         function setupInteractivity() {
             const ham = document.getElementById('hamburger');
             const nav = document.getElementById('nav-menu');
-            ham.onclick = () => {
-                nav.classList.toggle('active');
-                ham.querySelector('i').classList.toggle('fa-times');
-                ham.querySelector('i').classList.toggle('fa-bars');
-            };
-            document.querySelectorAll('.nav-link').forEach(l => l.onclick = () => { if(nav.classList.contains('active')) ham.click(); });
-
-            document.getElementById('prev-btn').onclick = () => { currentPlanIndex = getPrevIndex(); updateCarousel(); };
-            document.getElementById('next-btn').onclick = () => { currentPlanIndex = getNextIndex(); updateCarousel(); };
+            if (ham && nav) {
+                ham.onclick = () => {
+                    nav.classList.toggle('active');
+                    const icon = ham.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-times');
+                        icon.classList.toggle('fa-bars');
+                    }
+                };
+                document.querySelectorAll('.nav-link').forEach(l => l.onclick = () => {
+                    if (nav.classList.contains('active')) ham.click();
+                });
+            }
         }
     </script>
 </body>
