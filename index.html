@@ -82,22 +82,83 @@
         .nav-cta:hover { box-shadow: 0 0 20px rgba(0, 229, 255, 0.3); }
         .hamburger { display: none; cursor: pointer; color: var(--accent-cyan); font-size: 1.3rem; }
 
-        /* HERO */
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: calc(var(--header-height) + 60px) 20px 80px; position: relative; }
+        /* ========================================================
+           HERO SECTION (MODIFICADO CON ANIMACIÓN DE PANELES)
+           ======================================================== */
+        .hero { 
+            min-height: 100vh; 
+            display: flex; 
+            align-items: flex-start; /* Texto arriba */
+            justify-content: flex-start; /* Texto a la izquierda */
+            text-align: left; 
+            padding: calc(var(--header-height) + 120px) 24px 80px; 
+            position: relative; 
+            overflow: hidden; /* Evita que los paneles creen scroll horizontal */
+        }
+
+        /* Contenedor de la nueva animación */
+        .hero-bars {
+            position: absolute;
+            top: -20%;
+            right: -15%;
+            width: 70vw; /* Ocupa el lado derecho */
+            height: 150%;
+            display: flex;
+            transform: rotate(35deg); /* Inclinación de los paneles */
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Cada panel iluminado */
+        .light-bar {
+            flex: 1;
+            height: 100%;
+            /* Empieza negro/transparente, se vuelve celeste intenso y con borde blanco */
+            background: linear-gradient(90deg, #03060d 0%, rgba(0, 229, 255, 0.05) 40%, rgba(0, 229, 255, 0.5) 85%, rgba(255, 255, 255, 0.9) 100%);
+            border-right: 2px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 15px 0 50px rgba(0, 229, 255, 0.4);
+            opacity: 0;
+            animation: glowIn 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes glowIn {
+            0% { opacity: 0; filter: brightness(0); transform: translateX(-50px) scale(0.95); }
+            100% { opacity: 1; filter: brightness(1); transform: translateX(0) scale(1); }
+        }
+
+        /* Tiempos escalonados para que aparezcan uno tras otro */
+        .light-bar:nth-child(1) { animation-delay: 0.2s; }
+        .light-bar:nth-child(2) { animation-delay: 0.5s; }
+        .light-bar:nth-child(3) { animation-delay: 0.8s; }
+        .light-bar:nth-child(4) { animation-delay: 1.1s; }
+        .light-bar:nth-child(5) { animation-delay: 1.4s; }
+        .light-bar:nth-child(6) { animation-delay: 1.7s; }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 650px; /* Limita el ancho para no pisar la animación en PC */
+            margin: 0; /* Anula márgenes automáticos */
+        }
+
         .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 229, 255, 0.06); border: 1px solid rgba(0, 229, 255, 0.15); color: var(--accent-cyan); padding: 6px 18px; border-radius: 50px; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500; margin-bottom: 28px; }
         .hero-badge .pulse-dot { width: 8px; height: 8px; background: var(--accent-green); border-radius: 50%; animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(57, 255, 142, 0.4); } 50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(57, 255, 142, 0); } }
-        .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 24px; font-weight: 800; letter-spacing: -0.04em; max-width: 850px; margin-inline: auto; color: var(--text-bright); }
-        .hero p { font-size: 1.1rem; margin-bottom: 40px; color: var(--text-muted); max-width: 600px; margin-inline: auto; line-height: 1.8; }
-        .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+        
+        .hero h1 { font-size: clamp(2.8rem, 6vw, 4.5rem); margin-bottom: 24px; font-weight: 800; letter-spacing: -0.04em; color: var(--text-bright); }
+        .hero p { font-size: 1.1rem; margin-bottom: 40px; color: var(--text-muted); line-height: 1.8; }
+        .hero-buttons { display: flex; gap: 16px; justify-content: flex-start; flex-wrap: wrap; }
+        
         .hero-terminal { margin-top: 50px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); opacity: 0.5; }
         .hero-terminal .cursor { display: inline-block; width: 8px; height: 16px; background: var(--accent-cyan); margin-left: 4px; animation: blink 1s step-end infinite; vertical-align: middle; }
         @keyframes blink { 50% { opacity: 0; } }
-        .scroll-down { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: var(--accent-cyan); font-size: 1rem; animation: float 2.5s infinite ease-in-out; text-decoration: none; opacity: 0.5; }
+        
+        .scroll-down { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); color: var(--accent-cyan); font-size: 1rem; animation: float 2.5s infinite ease-in-out; text-decoration: none; opacity: 0.5; z-index: 10; }
         @keyframes float { 0%, 100% { transform: translateY(0) translateX(-50%); } 50% { transform: translateY(-10px) translateX(-50%); } }
 
         /* ========================================================
-           PROJECTS (NUEVA GALERÍA 3D TIPO COVERFLOW)
+           PROJECTS (GALERÍA 3D TIPO COVERFLOW)
            ======================================================== */
         .projects-swiper { width: 100%; padding: 40px 0 60px; overflow: hidden; }
         .swiper-slide { width: 380px; height: auto; transition: 0.3s; }
@@ -300,6 +361,14 @@
 
         /* RESPONSIVE MÓVIL Y TABLET */
         @media (max-width: 992px) {
+            .hero {
+                padding-top: calc(var(--header-height) + 60px); 
+            }
+            .hero-bars {
+                right: -40%; /* Ajustar un poco para móvil */
+                width: 120vw; /* Hacer los paneles más grandes */
+                opacity: 0.7; /* Bajar opacidad para no opacar el texto en móvil */
+            }
             .hero h1 { font-size: 3rem; }
             .bento-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
             .service-card { min-height: 220px; }
@@ -436,6 +505,15 @@
     </header>
 
     <section id="inicio" class="hero">
+        <div class="hero-bars">
+            <div class="light-bar"></div>
+            <div class="light-bar"></div>
+            <div class="light-bar"></div>
+            <div class="light-bar"></div>
+            <div class="light-bar"></div>
+            <div class="light-bar"></div>
+        </div>
+
         <div class="hero-content reveal">
             <div class="hero-badge">
                 <span class="pulse-dot"></span> Disponible para proyectos
